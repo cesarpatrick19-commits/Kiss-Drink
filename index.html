@@ -471,66 +471,96 @@
     }
 
 
-    /* =========================================
-       INDICADOR DE BLOQUEO
-    ========================================= */
+/* =========================================
+   INDICADOR DE CONTROLES BLOQUEADOS
+========================================= */
 
-    .lock-indicator {
+.lock-indicator {
 
-      position: absolute;
+  position: absolute;
 
-      top: 12px;
-      right: 12px;
+  top: 12px;
+  right: 12px;
 
-      z-index: 30;
+  z-index: 30;
 
-      background:
-        rgba(0, 0, 0, 0.55);
+  width: 32px;
+  height: 32px;
 
-      color:
-        white;
+  display: flex;
 
-      border:
-        1px solid
-        rgba(255, 255, 255, 0.25);
+  align-items: center;
+  justify-content: center;
 
-      border-radius:
-        20px;
+  background:
+    rgba(0, 0, 0, 0.45);
 
-      padding:
-        5px 9px;
+  color:
+    white;
 
-      font-size:
-        0.7rem;
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.25);
 
-      opacity:
-        0;
+  border-radius:
+    50%;
 
-      transform:
-        translateY(-10px);
+  font-size:
+    0.85rem;
 
-      pointer-events:
-        none;
+  /*
+    Oculto por defecto.
+  */
 
-      transition:
-        opacity 0.3s ease,
-        transform 0.3s ease;
+  opacity:
+    0;
 
-      backdrop-filter:
-        blur(5px);
+  transform:
+    scale(0.8);
 
-    }
+  pointer-events:
+    none;
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+
+  backdrop-filter:
+    blur(5px);
+
+}
 
 
-    .lock-indicator.visible {
+/*
+  Cuando los controles están bloqueados,
+  el candado permanece visible.
+*/
 
-      opacity:
-        1;
+.lock-indicator.visible {
 
-      transform:
-        translateY(0);
+  opacity:
+    1;
 
-    }
+  transform:
+    scale(1);
+
+  /*
+    Muy importante:
+
+    El indicador ahora puede recibir
+    pulsaciones para desbloquear.
+  */
+
+  pointer-events:
+    auto;
+
+  cursor:
+    pointer;
+
+  touch-action:
+    none;
+
+}
 
 
     /* =========================================
@@ -691,9 +721,10 @@
     <div
       class="lock-indicator"
       id="lock-indicator"
+      title="Mantén presionado para desbloquear"
     >
 
-      🔒 Controles bloqueados
+      🔒 
 
     </div>
 
@@ -1032,60 +1063,40 @@
        BLOQUEAR CONTROLES
     ========================================= */
 
-    function lockControls() {
+   function lockControls() {
+
+  controlsLocked =
+    true;
 
 
-      controlsLocked =
-        true;
+  /*
+    Ocultar barra de controles.
+  */
+
+  bottomBar.classList.add(
+    'hidden'
+  );
 
 
-      /*
-        Ocultar barra inmediatamente.
-      */
+  /*
+    Mostrar candado permanente.
+  */
 
-      bottomBar.classList.add(
-        'hidden'
-      );
-
-
-      /*
-        Cambiar icono.
-      */
-
-      lockBtn.textContent =
-        '🔒';
+  lockIndicator.classList.add(
+    'visible'
+  );
 
 
-      lockBtn.title =
-        'Mantén presionado para desbloquear';
+  /*
+    Cancelar cualquier temporizador
+    de ocultación.
+  */
 
+  clearTimeout(
+    hideControlsTimer
+  );
 
-      /*
-        Mostrar indicador.
-      */
-
-      lockIndicator.classList.add(
-        'visible'
-      );
-
-
-      /*
-        Ocultar indicador después
-        de 3 segundos.
-      */
-
-      setTimeout(
-        () => {
-
-          lockIndicator.classList.remove(
-            'visible'
-          );
-
-        },
-        3000
-      );
-
-    }
+}
 
 
     /* =========================================
@@ -1100,16 +1111,13 @@
 
 
       /*
-        Cambiar icono.
+        Ocultar el candado.
       */
 
-      lockBtn.textContent =
-        '🔓';
-
-
-      lockBtn.title =
-        'Bloquear controles';
-
+        lockIndicator.classList.remove(
+    'visible'
+  );
+    
 
       /*
         Mostrar controles.
@@ -1119,48 +1127,80 @@
 
     }
 
-
     /* =========================================
-       BOTÓN DE BLOQUEO
-    ========================================= */
+   DESBLOQUEO MEDIANTE CANDADO
+   MANTENER PRESIONADO 2 SEGUNDOS
+========================================= */
 
-    let lockPressTimer =
-      null;
+let unlockPressTimer =
+  null;
+
+
+lockIndicator.addEventListener(
+  'pointerdown',
+  (e) => {
+
+    /*
+      Evitar que el toque
+      active otros elementos.
+    */
+
+    e.preventDefault();
 
 
     /*
-      Inicio de pulsación.
+      Iniciar temporizador
+      de desbloqueo.
     */
 
-    lockBtn.addEventListener(
-      'pointerdown',
-      () => {
+    unlockPressTimer =
+      setTimeout(
+        () => {
+
+          unlockControls();
+
+        },
+        2000
+      );
+
+  }
+);
 
 
-        /*
-          Solo necesitamos
-          mantener presionado
-          cuando está bloqueado.
-        */
+lockIndicator.addEventListener(
+  'pointerup',
+  () => {
 
-        if (
-          !controlsLocked
-        ) {
-
-          return;
-
-        }
-
-
-        lockPressTimer =
-          setTimeout(
-            unlockControls,
-            2000
-          );
-
-      }
+    clearTimeout(
+      unlockPressTimer
     );
 
+  }
+);
+
+
+lockIndicator.addEventListener(
+  'pointerleave',
+  () => {
+
+    clearTimeout(
+      unlockPressTimer
+    );
+
+  }
+);
+
+
+lockIndicator.addEventListener(
+  'pointercancel',
+  () => {
+
+    clearTimeout(
+      unlockPressTimer
+    );
+
+  }
+);
 
     /*
       Cancelar pulsación.
