@@ -12,10 +12,11 @@
 
   <title>Kiss Cam Boda</title>
 
+
   <style>
 
     /* =========================================
-       RESET
+       RESET GENERAL
     ========================================= */
 
     * {
@@ -43,8 +44,8 @@
         sans-serif;
 
       /*
-        Evita comportamientos táctiles
-        no deseados en móviles.
+        Permite controlar mejor
+        los gestos táctiles.
       */
 
       touch-action: manipulation;
@@ -71,7 +72,7 @@
 
 
     /* =========================================
-       VIDEO
+       VIDEO DE LA CÁMARA
     ========================================= */
 
     video {
@@ -136,6 +137,10 @@
 
       display: block;
 
+      /*
+        El PNG se adapta a toda la pantalla.
+      */
+
       object-fit: fill;
 
       pointer-events: none;
@@ -169,8 +174,7 @@
 
       align-items: center;
 
-      padding:
-        10px;
+      padding: 10px;
 
       z-index: 20;
 
@@ -218,7 +222,7 @@
         0;
 
       /*
-        Animación de aparición.
+        Estado visible.
       */
 
       opacity: 1;
@@ -251,7 +255,7 @@
 
 
     /* =========================================
-       TEXTO
+       TEXTO DE LA BARRA
     ========================================= */
 
     .footer-text {
@@ -287,7 +291,7 @@
 
 
     /* =========================================
-       CERVEZA
+       EMOJI CERVEZA
     ========================================= */
 
     .Glass {
@@ -338,13 +342,17 @@
     @keyframes pulse {
 
       from {
+
         transform:
           scale(1);
+
       }
 
       to {
+
         transform:
           scale(1.3);
+
       }
 
     }
@@ -445,6 +453,9 @@
       user-select:
         none;
 
+      touch-action:
+        manipulation;
+
     }
 
 
@@ -460,107 +471,96 @@
 
 
     /* =========================================
-       BOTÓN DE BLOQUEO
+       CANDADO PERMANENTE
+       CUANDO LOS CONTROLES ESTÁN BLOQUEADOS
     ========================================= */
 
-    #lock-controls {
+    .lock-indicator {
+
+      position: absolute;
+
+      top: 12px;
+      right: 12px;
+
+      z-index: 40;
+
+      width: 34px;
+      height: 34px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      background:
+        rgba(0, 0, 0, 0.55);
+
+      color:
+        white;
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.35);
+
+      border-radius:
+        50%;
 
       font-size:
-        0.85rem;
+        0.9rem;
+
+      /*
+        Oculto inicialmente.
+      */
+
+      opacity: 0;
+
+      transform:
+        scale(0.8);
+
+      pointer-events:
+        none;
+
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+
+      backdrop-filter:
+        blur(5px);
+
+      cursor:
+        pointer;
+
+      user-select:
+        none;
+
+      touch-action:
+        none;
 
     }
 
 
-/* =========================================
-   INDICADOR DE CONTROLES BLOQUEADOS
-========================================= */
+    /*
+      Estado visible cuando la cámara
+      está bloqueada.
+    */
 
-.lock-indicator {
+    .lock-indicator.visible {
 
-  position: absolute;
+      opacity:
+        1;
 
-  top: 12px;
-  right: 12px;
+      transform:
+        scale(1);
 
-  z-index: 30;
+      /*
+        Permite tocar el candado
+        para desbloquear.
+      */
 
-  width: 32px;
-  height: 32px;
+      pointer-events:
+        auto;
 
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  background:
-    rgba(0, 0, 0, 0.45);
-
-  color:
-    white;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.25);
-
-  border-radius:
-    50%;
-
-  font-size:
-    0.85rem;
-
-  /*
-    Oculto por defecto.
-  */
-
-  opacity:
-    0;
-
-  transform:
-    scale(0.8);
-
-  pointer-events:
-    none;
-
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-
-  backdrop-filter:
-    blur(5px);
-
-}
-
-
-/*
-  Cuando los controles están bloqueados,
-  el candado permanece visible.
-*/
-
-.lock-indicator.visible {
-
-  opacity:
-    1;
-
-  transform:
-    scale(1);
-
-  /*
-    Muy importante:
-
-    El indicador ahora puede recibir
-    pulsaciones para desbloquear.
-  */
-
-  pointer-events:
-    auto;
-
-  cursor:
-    pointer;
-
-  touch-action:
-    none;
-
-}
+    }
 
 
     /* =========================================
@@ -626,7 +626,7 @@
 
 
     /* =========================================
-       PANTALLAS PEQUEÑAS
+       PANTALLAS VERTICALES PEQUEÑAS
     ========================================= */
 
     @media
@@ -665,6 +665,26 @@
 
       }
 
+
+      .lock-indicator {
+
+        width:
+          30px;
+
+        height:
+          30px;
+
+        top:
+          10px;
+
+        right:
+          10px;
+
+        font-size:
+          0.8rem;
+
+      }
+
     }
 
 
@@ -699,7 +719,7 @@
 
 
     <!-- =======================================
-         MARCO
+         MARCO DECORATIVO
     ======================================== -->
 
     <picture
@@ -715,17 +735,19 @@
 
 
     <!-- =======================================
-         INDICADOR DE BLOQUEO
+         CANDADO DE BLOQUEO
+         
+         Este elemento permanece visible
+         mientras los controles están bloqueados.
     ======================================== -->
 
     <div
       class="lock-indicator"
       id="lock-indicator"
-      title="Mantén presionado para desbloquear"
+      title="Mantén presionado durante 2 segundos para desbloquear"
+      aria-label="Desbloquear controles"
     >
-
-      🔒 
-
+      🔒
     </div>
 
 
@@ -740,7 +762,7 @@
 
 
       <!-- =====================================
-           BARRA
+           BARRA INFERIOR
       ====================================== -->
 
       <div
@@ -844,7 +866,7 @@
 
 
     /* =========================================
-       ELEMENTOS
+       ELEMENTOS DEL DOM
     ========================================= */
 
     const video =
@@ -884,7 +906,7 @@
 
 
     /* =========================================
-       CÁMARA
+       VARIABLES DE CÁMARA
     ========================================= */
 
     let currentStream =
@@ -900,7 +922,7 @@
 
 
     /* =========================================
-       ZOOM
+       VARIABLES DEL ZOOM
     ========================================= */
 
     let initialPinchDistance =
@@ -941,13 +963,21 @@
 
     /*
       Tiempo que permanecen visibles
-      después de tocar la pantalla.
+      los controles después de tocar.
 
       5000 = 5 segundos.
     */
 
     const CONTROL_TIMEOUT =
       5000;
+
+
+    /* =========================================
+       TEMPORIZADOR PARA DESBLOQUEAR
+    ========================================= */
+
+    let unlockPressTimer =
+      null;
 
 
     /* =========================================
@@ -990,7 +1020,7 @@
 
       /*
         Si están bloqueados,
-        no hacemos nada.
+        no mostramos la barra.
       */
 
       if (
@@ -1001,6 +1031,10 @@
 
       }
 
+
+      /*
+        Mostrar barra.
+      */
 
       bottomBar.classList.remove(
         'hidden'
@@ -1017,8 +1051,10 @@
 
 
       /*
-        Ocultar automáticamente
-        después de 5 segundos.
+        Crear nuevo temporizador.
+
+        Después de 5 segundos
+        la barra desaparece.
       */
 
       hideControlsTimer =
@@ -1039,13 +1075,16 @@
 
       /*
         Si están bloqueados,
-        no ocultamos mediante
-        el temporizador.
+        mantenemos la barra oculta.
       */
 
       if (
         controlsLocked
       ) {
+
+        bottomBar.classList.add(
+          'hidden'
+        );
 
         return;
 
@@ -1063,40 +1102,44 @@
        BLOQUEAR CONTROLES
     ========================================= */
 
-   function lockControls() {
-
-  controlsLocked =
-    true;
+    function lockControls() {
 
 
-  /*
-    Ocultar barra de controles.
-  */
+      /*
+        Activar estado bloqueado.
+      */
 
-  bottomBar.classList.add(
-    'hidden'
-  );
-
-
-  /*
-    Mostrar candado permanente.
-  */
-
-  lockIndicator.classList.add(
-    'visible'
-  );
+      controlsLocked =
+        true;
 
 
-  /*
-    Cancelar cualquier temporizador
-    de ocultación.
-  */
+      /*
+        Cancelar temporizador.
+      */
 
-  clearTimeout(
-    hideControlsTimer
-  );
+      clearTimeout(
+        hideControlsTimer
+      );
 
-}
+
+      /*
+        Ocultar barra.
+      */
+
+      bottomBar.classList.add(
+        'hidden'
+      );
+
+
+      /*
+        Mostrar candado independiente.
+      */
+
+      lockIndicator.classList.add(
+        'visible'
+      );
+
+    }
 
 
     /* =========================================
@@ -1106,139 +1149,48 @@
     function unlockControls() {
 
 
+      /*
+        Desactivar bloqueo.
+      */
+
       controlsLocked =
         false;
 
 
       /*
-        Ocultar el candado.
+        Ocultar candado.
       */
 
-        lockIndicator.classList.remove(
-    'visible'
-  );
-    
+      lockIndicator.classList.remove(
+        'visible'
+      );
+
 
       /*
         Mostrar controles.
+
+        El temporizador de 5 segundos
+        comenzará nuevamente.
       */
 
       showControls();
 
     }
 
+
     /* =========================================
-   DESBLOQUEO MEDIANTE CANDADO
-   MANTENER PRESIONADO 2 SEGUNDOS
-========================================= */
-
-let unlockPressTimer =
-  null;
-
-
-lockIndicator.addEventListener(
-  'pointerdown',
-  (e) => {
-
-    /*
-      Evitar que el toque
-      active otros elementos.
-    */
-
-    e.preventDefault();
-
-
-    /*
-      Iniciar temporizador
-      de desbloqueo.
-    */
-
-    unlockPressTimer =
-      setTimeout(
-        () => {
-
-          unlockControls();
-
-        },
-        2000
-      );
-
-  }
-);
-
-
-lockIndicator.addEventListener(
-  'pointerup',
-  () => {
-
-    clearTimeout(
-      unlockPressTimer
-    );
-
-  }
-);
-
-
-lockIndicator.addEventListener(
-  'pointerleave',
-  () => {
-
-    clearTimeout(
-      unlockPressTimer
-    );
-
-  }
-);
-
-
-lockIndicator.addEventListener(
-  'pointercancel',
-  () => {
-
-    clearTimeout(
-      unlockPressTimer
-    );
-
-  }
-);
-
-    /*
-      Cancelar pulsación.
-    */
-
-    lockBtn.addEventListener(
-      'pointerup',
-      () => {
-
-        clearTimeout(
-          lockPressTimer
-        );
-
-      }
-    );
-
-
-    lockBtn.addEventListener(
-      'pointercancel',
-      () => {
-
-        clearTimeout(
-          lockPressTimer
-        );
-
-      }
-    );
-
-
-    /*
-      Cuando está desbloqueado,
-      un toque normal bloquea.
-    */
+       BOTÓN PARA BLOQUEAR
+    ========================================= */
 
     lockBtn.addEventListener(
       'click',
       () => {
 
+
+        /*
+          Si no está bloqueado,
+          bloquear.
+        */
 
         if (
           !controlsLocked
@@ -1253,7 +1205,105 @@ lockIndicator.addEventListener(
 
 
     /* =========================================
-       INTERACCIÓN CON PANTALLA
+       CANDADO:
+       MANTENER PRESIONADO PARA DESBLOQUEAR
+    ========================================= */
+
+    lockIndicator.addEventListener(
+      'pointerdown',
+      (e) => {
+
+
+        /*
+          Evitar que el evento
+          se propague.
+        */
+
+        e.preventDefault();
+
+        e.stopPropagation();
+
+
+        /*
+          Iniciar temporizador.
+
+          Hay que mantener presionado
+          durante 2 segundos.
+        */
+
+        unlockPressTimer =
+          setTimeout(
+            () => {
+
+              unlockControls();
+
+            },
+            2000
+          );
+
+      }
+    );
+
+
+    /* =========================================
+       SOLTAR CANDADO
+    ========================================= */
+
+    lockIndicator.addEventListener(
+      'pointerup',
+      (e) => {
+
+
+        e.preventDefault();
+
+        e.stopPropagation();
+
+
+        /*
+          Cancelar si se soltó
+          antes de 2 segundos.
+        */
+
+        clearTimeout(
+          unlockPressTimer
+        );
+
+      }
+    );
+
+
+    /* =========================================
+       CANCELAR DESBLOQUEO
+    ========================================= */
+
+    lockIndicator.addEventListener(
+      'pointercancel',
+      () => {
+
+
+        clearTimeout(
+          unlockPressTimer
+        );
+
+      }
+    );
+
+
+    lockIndicator.addEventListener(
+      'pointerleave',
+      () => {
+
+
+        clearTimeout(
+          unlockPressTimer
+        );
+
+      }
+    );
+
+
+    /* =========================================
+       TOCAR LA PANTALLA
     ========================================= */
 
     document.addEventListener(
@@ -1262,9 +1312,10 @@ lockIndicator.addEventListener(
 
 
         /*
-          Ignorar botones.
+          Si se tocó un botón,
+          ignorar.
 
-          Los botones manejan
+          Los botones tienen
           sus propios eventos.
         */
 
@@ -1280,8 +1331,27 @@ lockIndicator.addEventListener(
 
 
         /*
-          Si los controles están bloqueados,
-          no mostrar nada.
+          Si se tocó el candado,
+          ignorar.
+
+          El candado tiene su propio
+          sistema de desbloqueo.
+        */
+
+        if (
+          e.target.closest(
+            '#lock-indicator'
+          )
+        ) {
+
+          return;
+
+        }
+
+
+        /*
+          Si está bloqueado,
+          no mostrar controles.
         */
 
         if (
@@ -1311,7 +1381,7 @@ lockIndicator.addEventListener(
 
 
       /*
-        Detener cámara anterior.
+        Detener stream anterior.
       */
 
       if (
@@ -1330,6 +1400,11 @@ lockIndicator.addEventListener(
 
       try {
 
+
+        /*
+          Solicitar acceso
+          a la cámara.
+        */
 
         const stream =
           await navigator.mediaDevices
@@ -1362,22 +1437,34 @@ lockIndicator.addEventListener(
             });
 
 
+        /*
+          Guardar stream.
+        */
+
         currentStream =
           stream;
 
 
+        /*
+          Mostrar cámara.
+        */
+
         video.srcObject =
           stream;
 
+
+        /*
+          Obtener pista de video.
+        */
 
         videoTrack =
           stream
             .getVideoTracks()[0];
 
 
-        /*
-          Configurar zoom.
-        */
+        /* =====================================
+           CONFIGURAR ZOOM
+        ====================================== */
 
         if (
           videoTrack
@@ -1407,6 +1494,10 @@ lockIndicator.addEventListener(
               minZoom;
 
 
+            /*
+              Aplicar zoom mínimo.
+            */
+
             await videoTrack
               .applyConstraints({
 
@@ -1423,11 +1514,14 @@ lockIndicator.addEventListener(
 
               })
               .catch(
-                e =>
+                e => {
+
                   console.log(
-                    "Error zoom inicial:",
+                    "Error aplicando zoom inicial:",
                     e
-                  )
+                  );
+
+                }
               );
 
           }
@@ -1436,7 +1530,7 @@ lockIndicator.addEventListener(
 
 
         /*
-          Wake Lock.
+          Mantener pantalla encendida.
         */
 
         requestWakeLock();
@@ -1464,7 +1558,7 @@ lockIndicator.addEventListener(
 
 
     /* =========================================
-       ZOOM TÁCTIL
+       DISTANCIA ENTRE DOS DEDOS
     ========================================= */
 
     function getDistance(
@@ -1490,6 +1584,10 @@ lockIndicator.addEventListener(
     }
 
 
+    /* =========================================
+       INICIO DEL PINCH ZOOM
+    ========================================= */
+
     window.addEventListener(
       'touchstart',
       (e) => {
@@ -1511,6 +1609,10 @@ lockIndicator.addEventListener(
       }
     );
 
+
+    /* =========================================
+       MOVIMIENTO DEL PINCH ZOOM
+    ========================================= */
 
     window.addEventListener(
       'touchmove',
@@ -1545,6 +1647,10 @@ lockIndicator.addEventListener(
               );
 
 
+            /*
+              Sensibilidad del zoom.
+            */
+
             const diff =
 
               (
@@ -1552,6 +1658,11 @@ lockIndicator.addEventListener(
                 initialPinchDistance
               ) * 0.01;
 
+
+            /*
+              Limitar zoom
+              al rango soportado.
+            */
 
             const newZoom =
 
@@ -1618,6 +1729,10 @@ lockIndicator.addEventListener(
     );
 
 
+    /* =========================================
+       FINALIZAR PINCH ZOOM
+    ========================================= */
+
     window.addEventListener(
       'touchend',
       (e) => {
@@ -1645,6 +1760,11 @@ lockIndicator.addEventListener(
       () => {
 
 
+        /*
+          Alternar entre cámara frontal
+          y cámara trasera.
+        */
+
         facingMode =
 
           facingMode === "user"
@@ -1653,6 +1773,10 @@ lockIndicator.addEventListener(
 
             : "user";
 
+
+        /*
+          Reiniciar cámara.
+        */
 
         startCamera();
 
@@ -1675,6 +1799,10 @@ lockIndicator.addEventListener(
           );
 
 
+        /*
+          Entrar en pantalla completa.
+        */
+
         if (
           !document.fullscreenElement
         ) {
@@ -1683,14 +1811,24 @@ lockIndicator.addEventListener(
           app
             .requestFullscreen()
             .catch(
-              err =>
+              err => {
+
                 alert(
                   err.message
-                )
+                );
+
+              }
             );
 
 
-        } else {
+        }
+
+
+        /*
+          Salir de pantalla completa.
+        */
+
+        else {
 
 
           document.exitFullscreen();
@@ -1726,7 +1864,7 @@ lockIndicator.addEventListener(
 
 
     /* =========================================
-       INICIAR
+       INICIAR APLICACIÓN
     ========================================= */
 
     startCamera();
