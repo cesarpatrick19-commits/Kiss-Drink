@@ -90,89 +90,76 @@
        MARCO DECORATIVO
     ========================================= */
 
-    .frame-overlay {
+.frame-overlay {
+  position: absolute;
 
-      position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
-      top: 0;
-      left: 0;
+  width: 100%;
+  height: 100%;
 
-      width: 100%;
-      height: 100%;
+  margin: 0;
+  padding: 0;
 
-      display: block;
+  display: block;
 
-      pointer-events: none;
+  pointer-events: none;
 
-      z-index: 10;
+  z-index: 10;
+}
 
-    }
+.frame-overlay img {
+  position: absolute;
 
+  top: 0;
+  left: 0;
 
-    .frame-overlay img {
+  width: 100%;
+  height: 100%;
 
-      width: 100%;
-      height: 100%;
+  margin: 0;
+  padding: 0;
 
-      display: block;
+  display: block;
 
-      /*
-        El marco se adapta exactamente
-        al formato de pantalla.
-      */
+  object-fit: fill;
 
-      object-fit: fill;
-
-    }
+  pointer-events: none;
+}
 
 
     /* =========================================
        INTERFAZ SUPERIOR
     ========================================= */
+.overlay {
+  position: absolute;
 
-    .overlay {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
-      position: absolute;
+  width: 100%;
+  height: 100%;
 
-      top: 0;
-      left: 0;
+  pointer-events: none;
 
-      width: 100%;
-      height: 100%;
+  display: flex;
 
-      pointer-events: none;
+  flex-direction: column;
 
-      /*
-        Dejamos un borde sutil
-        alrededor de la pantalla.
-      */
+  justify-content: flex-end;
 
-      border: 4px solid
-        rgba(255, 255, 255, 0.5);
+  align-items: center;
 
-      box-shadow:
-        inset 0 0 20px
-        rgba(0, 0, 0, 0.25);
+  padding:
+    10px;
 
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      /*
-        Espacio seguro para la interfaz.
-      */
-
-      padding:
-        10px 8px 12px 8px;
-
-      z-index: 20;
-
-    }
-
+  z-index: 20;
+}
 
     /* =========================================
        HEADER KISS CAM
@@ -750,21 +737,6 @@
     <div
       class="overlay"
     >
-
-
-      <!-- HEADER -->
-
-      <div
-        class="header"
-      >
-
-        <h1>
-          💋 KISS CAM 💋
-        </h1>
-
-      </div>
-
-
       <!-- BARRA INFERIOR -->
 
       <div
