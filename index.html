@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+
+  <meta 
+    name="viewport" 
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
+
+  <title>Kiss Cam Boda</title>
+
+  <style>
+
+    /* =========================================
+       RESET GENERAL
+    ========================================= */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      background-color: #000;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+
+    /* =========================================
+       CONTENEDOR PRINCIPAL
+    ========================================= */
+
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100dvh;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      overflow: hidden;
+    }
+
+
+    /* =========================================
+       VIDEO DE LA CÁMARA
+    ========================================= */
+
+    video {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+    }
+
+
+    /* =========================================
+       OVERLAY GENERAL
+    ========================================= */
+
+    .overlay {
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      pointer-events: none;
+
+      border: 4px solid rgba(255, 255, 255, 0.8);
+
+      box-shadow:
+        inset 0 0 20px rgba(0, 0, 0, 0.4);
+
+      display: flex;
+      flex-direction: column;
+
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 10px 8px 12px 8px;
+    }
+
+
+    /* =========================================
+       HEADER / KISS CAM
+    ========================================= */
+
+    .header {
+      background: rgba(255, 255, 255, 0.9);
+
+      padding: 5px 16px;
+
+      border-radius: 30px;
+
+      border: 2px solid #ff4d6d;
+
+      box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.25);
+
+      backdrop-filter: blur(4px);
+
+      pointer-events: auto;
+
+      flex-shrink: 0;
+    }
+
+
+    .header h1 {
+      color: #c9184a;
+
+      font-size: 1rem;
+
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
+
+      font-weight: 800;
+
+      white-space: nowrap;
+
+      line-height: 1.2;
+    }
+
+
+    /* =========================================
+       BARRA INFERIOR
+    ========================================= */
+
+    .bottom-bar {
+
+      pointer-events: auto;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      background: rgba(0, 0, 0, 0.65);
+
+      padding: 5px 9px;
+
+      border-radius: 30px;
+
+      border: 1px solid rgba(255, 255, 255, 0.3);
+
+      backdrop-filter: blur(6px);
+
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.3);
+
+      /*
+        Evita que la barra sea más ancha
+        que la pantalla disponible
+      */
+      max-width: calc(100vw - 16px);
+
+      /*
+        Evita que los elementos internos
+        se deformen o se compriman
+      */
+      flex-shrink: 0;
+    }
+
+
+    /* =========================================
+       TEXTO "BESO O SHOT"
+    ========================================= */
+
+    .footer-text {
+
+      color: #fff;
+
+      font-size: 0.78rem;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 4px;
+
+      font-weight: 600;
+
+      /*
+        MUY IMPORTANTE:
+
+        Evita que el navegador divida:
+
+        ¡Beso
+        o
+        Shot!
+
+        Ahora se mantiene en una sola línea.
+      */
+      white-space: nowrap;
+
+      /*
+        Impide que el texto se comprima
+        cuando hay poco espacio.
+      */
+      flex-shrink: 0;
+
+      line-height: 1;
+    }
+
+
+    /* =========================================
+       EMOJI CERVEZA
+    ========================================= */
+
+    .Glass {
+
+      animation:
+        pulse 0.9s infinite alternate;
+
+      font-size: 1rem;
+
+      line-height: 1;
+
+      flex-shrink: 0;
+    }
+
+
+    /* =========================================
+       CORAZÓN
+    ========================================= */
+
+    .heart {
+
+      color: #ff4d6d;
+
+      font-size: 1rem;
+
+      line-height: 1;
+
+      animation:
+        pulse 0.9s infinite alternate;
+
+      flex-shrink: 0;
+    }
+
+
+    /* =========================================
+       ANIMACIÓN DE EMOJIS
+    ========================================= */
+
+    @keyframes pulse {
+
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.3);
+      }
+
+    }
+
+
+    /* =========================================
+       SEPARADOR VERTICAL
+    ========================================= */
+
+    .divider {
+
+      width: 1px;
+
+      height: 20px;
+
+      background:
+        rgba(255, 255, 255, 0.3);
+
+      flex-shrink: 0;
+    }
+
+
+    /* =========================================
+       CONTROLES
+    ========================================= */
+
+    .controls {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 5px;
+
+      flex-shrink: 0;
+    }
+
+
+    /* =========================================
+       BOTONES
+    ========================================= */
+
+    .btn-icon {
+
+      background:
+        rgba(255, 255, 255, 0.15);
+
+      color: white;
+
+      border:
+        1px solid rgba(255, 255, 255, 0.4);
+
+      width: 30px;
+
+      height: 30px;
+
+      border-radius: 50%;
+
+      cursor: pointer;
+
+      font-size: 0.8rem;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      transition:
+        background 0.2s,
+        transform 0.1s;
+
+      /*
+        Evita que el botón se comprima
+      */
+      flex-shrink: 0;
+
+      /*
+        Mejora la interacción táctil
+      */
+      -webkit-tap-highlight-color: transparent;
+    }
+
+
+    .btn-icon:active {
+
+      transform:
+        scale(0.9);
+
+      background:
+        rgba(255, 255, 255, 0.4);
+    }
+
+
+    /* =========================================
+       AJUSTES PARA TELÉFONOS MUY ESTRECHOS
+    ========================================= */
+
+    @media (orientation: portrait) and (max-width: 380px) {
+
+      .bottom-bar {
+
+        gap: 5px;
+
+        padding:
+          4px 7px;
+      }
+
+
+      .footer-text {
+
+        font-size:
+          0.72rem;
+
+        gap:
+          3px;
+      }
+
+
+      .Glass,
+      .heart {
+
+        font-size:
+          0.9rem;
+      }
+
+
+      .controls {
+
+        gap:
+          4px;
+      }
+
+
+      .btn-icon {
+
+        width:
+          28px;
+
+        height:
+          28px;
+
+        font-size:
+          0.75rem;
+      }
+
+
+      .divider {
+
+        height:
+          18px;
+      }
+
+    }
+
+
+    /* =========================================
+       PANTALLA HORIZONTAL
+    ========================================= */
+
+    @media (orientation: landscape) {
+
+      .overlay {
+
+        padding:
+          8px 10px 10px 10px;
+      }
+
+
+      .header {
+
+        padding:
+          4px 16px;
+      }
+
+
+      .header h1 {
+
+        font-size:
+          0.95rem;
+
+        letter-spacing:
+          1px;
+      }
+
+
+      .bottom-bar {
+
+        padding:
+          4px 10px;
+
+        gap:
+          7px;
+
+        max-width:
+          calc(100vw - 20px);
+      }
+
+
+      .footer-text {
+
+        font-size:
+          0.8rem;
+      }
+
+
+      .Glass {
+
+        font-size:
+          1rem;
+      }
+
+
+      .heart {
+
+        font-size:
+          1rem;
+      }
+
+
+      .btn-icon {
+
+        width:
+          30px;
+
+        height:
+          30px;
+
+        font-size:
+          0.8rem;
+      }
+
+    }
+
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================================
+       APLICACIÓN PRINCIPAL
+  ========================================= -->
+
+  <div
+    class="container"
+    id="app"
+  >
+
+
+    <!-- VIDEO DE LA CÁMARA -->
+
+    <video
+      id="camera"
+      autoplay
+      playsinline
+      muted
+    ></video>
+
+
+    <!-- =========================================
+         CAPA SUPERIOR DE INTERFAZ
+    ========================================= -->
+
+    <div class="overlay">
+
+
+      <!-- =======================================
+           ENCABEZADO
+      ======================================== -->
+
+      <div class="header">
+
+        <h1>
+          💋 KISS CAM 💋
+        </h1>
+
+      </div>
+
+
+      <!-- =======================================
+           BARRA INFERIOR
+      ======================================== -->
+
+      <div class="bottom-bar">
+
+
+        <!-- TEXTO -->
+
+        <div class="footer-text">
+
+          <span class="Glass">
+            🍺
+          </span>
+
+          <span>
+            ¡Beso o Shot!
+          </span>
+
+          <span class="heart">
+            ❤️
+          </span>
+
+        </div>
+
+
+        <!-- SEPARADOR -->
+
+        <div class="divider"></div>
+
+
+        <!-- CONTROLES -->
+
+        <div class="controls">
+
+
+          <!-- CAMBIAR CÁMARA -->
+
+          <button
+            class="btn-icon"
+            id="switch-cam"
+            title="Cambiar Cámara"
+            aria-label="Cambiar Cámara"
+          >
+            🔄
+          </button>
+
+
+          <!-- PANTALLA COMPLETA -->
+
+          <button
+            class="btn-icon"
+            id="fullscreen"
+            title="Pantalla Completa"
+            aria-label="Pantalla Completa"
+          >
+            ⛶
+          </button>
+
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================= -->
+
+  <script>
+
+
+    /* =========================================
+       REFERENCIAS A ELEMENTOS
+    ========================================= */
+
+    const video =
+      document.getElementById('camera');
+
+    const switchBtn =
+      document.getElementById('switch-cam');
+
+    const fullscreenBtn =
+      document.getElementById('fullscreen');
+
+
+    /* =========================================
+       VARIABLES DE CÁMARA
+    ========================================= */
+
+    let currentStream =
+      null;
+
+    let videoTrack =
+      null;
+
+    let facingMode =
+      "environment";
+
+
+    /* =========================================
+       VARIABLES DE ZOOM
+    ========================================= */
+
+    let initialPinchDistance =
+      null;
+
+    let currentZoom =
+      1;
+
+    let minZoom =
+      1;
+
+    let maxZoom =
+      1;
+
+
+    /* =========================================
+       WAKE LOCK
+
+       Evita que el teléfono apague
+       la pantalla durante la Kiss Cam.
+    ========================================= */
+
+    async function requestWakeLock() {
+
+      try {
+
+        if ('wakeLock' in navigator) {
+
+          await navigator.wakeLock.request('screen');
+
+        }
+
+      } catch (err) {
+
+        console.log(
+          "WakeLock:",
+          err.message
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       INICIAR CÁMARA
+    ========================================= */
+
+    async function startCamera() {
+
+
+      /* Detener cámara anterior */
+
+      if (currentStream) {
+
+        currentStream
+          .getTracks()
+          .forEach(track => track.stop());
+
+      }
+
+
+      try {
+
+
+        /* Solicitar acceso a cámara */
+
+        const stream =
+          await navigator.mediaDevices.getUserMedia({
+
+            video: {
+
+              facingMode:
+                facingMode,
+
+              /*
+                Resolución ideal.
+                El navegador elegirá
+                la mejor disponible.
+              */
+
+              width: {
+                ideal: 1920
+              },
+
+              height: {
+                ideal: 1080
+              }
+
+            },
+
+            audio:
+              false
+
+          });
+
+
+        /* Guardar stream */
+
+        currentStream =
+          stream;
+
+
+        /* Mostrar cámara */
+
+        video.srcObject =
+          stream;
+
+
+        /* Obtener pista de video */
+
+        videoTrack =
+          stream.getVideoTracks()[0];
+
+
+        /* =====================================
+           CONFIGURAR ZOOM
+        ===================================== */
+
+        if (videoTrack) {
+
+
+          const capabilities =
+            videoTrack.getCapabilities
+              ? videoTrack.getCapabilities()
+              : {};
+
+
+          /*
+            Verificar si el dispositivo
+            permite zoom mediante API.
+          */
+
+          if ('zoom' in capabilities) {
+
+
+            minZoom =
+              capabilities.zoom.min || 1;
+
+            maxZoom =
+              capabilities.zoom.max || 1;
+
+
+            /*
+              Comenzar siempre
+              con zoom mínimo.
+            */
+
+            currentZoom =
+              minZoom;
+
+
+            /*
+              Aplicar zoom inicial.
+            */
+
+            await videoTrack.applyConstraints({
+
+              advanced: [
+                {
+                  zoom:
+                    minZoom
+                }
+              ]
+
+            }).catch(e => {
+
+              console.log(
+                "Error aplicando zoom inicial:",
+                e
+              );
+
+            });
+
+          }
+
+        }
+
+
+        /* Mantener pantalla encendida */
+
+        requestWakeLock();
+
+
+      } catch (err) {
+
+
+        alert(
+          "Error al acceder a la cámara: "
+          + err.message
+        );
+
+
+      }
+
+    }
+
+
+    /* =========================================
+       CALCULAR DISTANCIA ENTRE DOS DEDOS
+    ========================================= */
+
+    function getDistance(touches) {
+
+
+      const dx =
+        touches[0].clientX -
+        touches[1].clientX;
+
+
+      const dy =
+        touches[0].clientY -
+        touches[1].clientY;
+
+
+      return Math.hypot(
+        dx,
+        dy
+      );
+
+    }
+
+
+    /* =========================================
+       INICIO DEL PINCH ZOOM
+    ========================================= */
+
+    window.addEventListener(
+      'touchstart',
+      (e) => {
+
+
+        if (
+          e.touches.length === 2
+        ) {
+
+          initialPinchDistance =
+            getDistance(e.touches);
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       MOVIMIENTO DEL PINCH ZOOM
+    ========================================= */
+
+    window.addEventListener(
+      'touchmove',
+      async (e) => {
+
+
+        if (
+          e.touches.length === 2 &&
+          initialPinchDistance &&
+          videoTrack
+        ) {
+
+
+          const capabilities =
+            videoTrack.getCapabilities
+              ? videoTrack.getCapabilities()
+              : {};
+
+
+          if (
+            'zoom' in capabilities
+          ) {
+
+
+            const currentDistance =
+              getDistance(e.touches);
+
+
+            /*
+              Sensibilidad del zoom
+            */
+
+            const diff =
+              (
+                currentDistance -
+                initialPinchDistance
+              ) * 0.01;
+
+
+            /*
+              Calcular nuevo zoom
+              dentro de los límites
+              del dispositivo.
+            */
+
+            let newZoom =
+              Math.min(
+                Math.max(
+                  currentZoom + diff,
+                  minZoom
+                ),
+                maxZoom
+              );
+
+
+            try {
+
+
+              await videoTrack.applyConstraints({
+
+                advanced: [
+                  {
+                    zoom:
+                      newZoom
+                  }
+                ]
+
+              });
+
+
+              currentZoom =
+                newZoom;
+
+
+              initialPinchDistance =
+                currentDistance;
+
+
+            } catch (err) {
+
+
+              console.log(
+                "Error al hacer zoom:",
+                err
+              );
+
+
+            }
+
+          }
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       FINALIZAR PINCH ZOOM
+    ========================================= */
+
+    window.addEventListener(
+      'touchend',
+      (e) => {
+
+
+        if (
+          e.touches.length < 2
+        ) {
+
+          initialPinchDistance =
+            null;
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       CAMBIAR CÁMARA
+    ========================================= */
+
+    switchBtn.addEventListener(
+      'click',
+      () => {
+
+
+        facingMode =
+          facingMode === "user"
+            ? "environment"
+            : "user";
+
+
+        startCamera();
+
+      }
+    );
+
+
+    /* =========================================
+       PANTALLA COMPLETA
+    ========================================= */
+
+    fullscreenBtn.addEventListener(
+      'click',
+      () => {
+
+
+        const app =
+          document.getElementById('app');
+
+
+        if (
+          !document.fullscreenElement
+        ) {
+
+
+          app
+            .requestFullscreen()
+            .catch(err => {
+
+              alert(
+                err.message
+              );
+
+            });
+
+
+        } else {
+
+
+          document.exitFullscreen();
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       INICIAR APLICACIÓN
+    ========================================= */
+
+    startCamera();
+
+
+  </script>
+
+
+</body>
+</html>
