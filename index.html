@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
   <meta charset="UTF-8">
 
-  <meta 
-    name="viewport" 
+  <meta
+    name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   >
 
@@ -22,13 +24,24 @@
       padding: 0;
     }
 
+
     html,
     body {
+
       width: 100%;
       height: 100dvh;
+
       overflow: hidden;
+
       background-color: #000;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+      font-family:
+        'Segoe UI',
+        Tahoma,
+        Geneva,
+        Verdana,
+        sans-serif;
+
     }
 
 
@@ -37,15 +50,16 @@
     ========================================= */
 
     .container {
+
       position: relative;
+
       width: 100vw;
       height: 100dvh;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
       overflow: hidden;
+
+      background-color: #000;
+
     }
 
 
@@ -54,20 +68,70 @@
     ========================================= */
 
     video {
+
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
       width: 100%;
       height: 100%;
 
       object-fit: cover;
 
       display: block;
+
+      z-index: 1;
+
     }
 
 
     /* =========================================
-       OVERLAY GENERAL
+       MARCO DECORATIVO
+    ========================================= */
+
+    .frame-overlay {
+
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      display: block;
+
+      pointer-events: none;
+
+      z-index: 10;
+
+    }
+
+
+    .frame-overlay img {
+
+      width: 100%;
+      height: 100%;
+
+      display: block;
+
+      /*
+        El marco se adapta exactamente
+        al formato de pantalla.
+      */
+
+      object-fit: fill;
+
+    }
+
+
+    /* =========================================
+       INTERFAZ SUPERIOR
     ========================================= */
 
     .overlay {
+
       position: absolute;
 
       top: 0;
@@ -78,59 +142,95 @@
 
       pointer-events: none;
 
-      border: 4px solid rgba(255, 255, 255, 0.8);
+      /*
+        Dejamos un borde sutil
+        alrededor de la pantalla.
+      */
+
+      border: 4px solid
+        rgba(255, 255, 255, 0.5);
 
       box-shadow:
-        inset 0 0 20px rgba(0, 0, 0, 0.4);
+        inset 0 0 20px
+        rgba(0, 0, 0, 0.25);
 
       display: flex;
+
       flex-direction: column;
 
       justify-content: space-between;
+
       align-items: center;
 
-      padding: 10px 8px 12px 8px;
+      /*
+        Espacio seguro para la interfaz.
+      */
+
+      padding:
+        10px 8px 12px 8px;
+
+      z-index: 20;
+
     }
 
 
     /* =========================================
-       HEADER / KISS CAM
+       HEADER KISS CAM
     ========================================= */
 
     .header {
-      background: rgba(255, 255, 255, 0.9);
 
-      padding: 5px 16px;
+      background:
+        rgba(255, 255, 255, 0.9);
 
-      border-radius: 30px;
+      padding:
+        5px 16px;
 
-      border: 2px solid #ff4d6d;
+      border-radius:
+        30px;
+
+      border:
+        2px solid #ff4d6d;
 
       box-shadow:
-        0 4px 10px rgba(0, 0, 0, 0.25);
+        0 4px 10px
+        rgba(0, 0, 0, 0.25);
 
-      backdrop-filter: blur(4px);
+      backdrop-filter:
+        blur(4px);
 
-      pointer-events: auto;
+      pointer-events:
+        auto;
 
-      flex-shrink: 0;
+      flex-shrink:
+        0;
+
     }
 
 
     .header h1 {
-      color: #c9184a;
 
-      font-size: 1rem;
+      color:
+        #c9184a;
 
-      letter-spacing: 1px;
+      font-size:
+        1rem;
 
-      text-transform: uppercase;
+      letter-spacing:
+        1px;
 
-      font-weight: 800;
+      text-transform:
+        uppercase;
 
-      white-space: nowrap;
+      font-weight:
+        800;
 
-      line-height: 1.2;
+      white-space:
+        nowrap;
+
+      line-height:
+        1.2;
+
     }
 
 
@@ -140,79 +240,90 @@
 
     .bottom-bar {
 
-      pointer-events: auto;
+      pointer-events:
+        auto;
 
-      display: flex;
+      display:
+        flex;
 
-      align-items: center;
+      align-items:
+        center;
 
-      gap: 7px;
+      gap:
+        7px;
 
-      background: rgba(0, 0, 0, 0.65);
+      background:
+        rgba(0, 0, 0, 0.65);
 
-      padding: 5px 9px;
+      padding:
+        5px 9px;
 
-      border-radius: 30px;
+      border-radius:
+        30px;
 
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.3);
 
-      backdrop-filter: blur(6px);
+      backdrop-filter:
+        blur(6px);
 
       box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.3);
+        0 4px 12px
+        rgba(0, 0, 0, 0.3);
 
-      /*
-        Evita que la barra sea más ancha
-        que la pantalla disponible
-      */
-      max-width: calc(100vw - 16px);
+      max-width:
+        calc(100vw - 16px);
 
-      /*
-        Evita que los elementos internos
-        se deformen o se compriman
-      */
-      flex-shrink: 0;
+      flex-shrink:
+        0;
+
     }
 
 
     /* =========================================
-       TEXTO "BESO O SHOT"
+       TEXTO INFERIOR
     ========================================= */
 
     .footer-text {
 
-      color: #fff;
+      color:
+        #fff;
 
-      font-size: 0.78rem;
+      font-size:
+        0.78rem;
 
-      display: flex;
+      display:
+        flex;
 
-      align-items: center;
+      align-items:
+        center;
 
-      gap: 4px;
+      gap:
+        4px;
 
-      font-weight: 600;
+      font-weight:
+        600;
 
       /*
-        MUY IMPORTANTE:
-
-        Evita que el navegador divida:
+        Evita que:
 
         ¡Beso
         o
         Shot!
 
-        Ahora se mantiene en una sola línea.
+        se divida en varias líneas.
       */
-      white-space: nowrap;
 
-      /*
-        Impide que el texto se comprima
-        cuando hay poco espacio.
-      */
-      flex-shrink: 0;
+      white-space:
+        nowrap;
 
-      line-height: 1;
+      flex-shrink:
+        0;
+
+      line-height:
+        1;
+
     }
 
 
@@ -225,11 +336,15 @@
       animation:
         pulse 0.9s infinite alternate;
 
-      font-size: 1rem;
+      font-size:
+        1rem;
 
-      line-height: 1;
+      line-height:
+        1;
 
-      flex-shrink: 0;
+      flex-shrink:
+        0;
+
     }
 
 
@@ -239,50 +354,65 @@
 
     .heart {
 
-      color: #ff4d6d;
+      color:
+        #ff4d6d;
 
-      font-size: 1rem;
+      font-size:
+        1rem;
 
-      line-height: 1;
+      line-height:
+        1;
 
       animation:
         pulse 0.9s infinite alternate;
 
-      flex-shrink: 0;
+      flex-shrink:
+        0;
+
     }
 
 
     /* =========================================
-       ANIMACIÓN DE EMOJIS
+       ANIMACIÓN
     ========================================= */
 
     @keyframes pulse {
 
       from {
-        transform: scale(1);
+
+        transform:
+          scale(1);
+
       }
 
       to {
-        transform: scale(1.3);
+
+        transform:
+          scale(1.3);
+
       }
 
     }
 
 
     /* =========================================
-       SEPARADOR VERTICAL
+       SEPARADOR
     ========================================= */
 
     .divider {
 
-      width: 1px;
+      width:
+        1px;
 
-      height: 20px;
+      height:
+        20px;
 
       background:
         rgba(255, 255, 255, 0.3);
 
-      flex-shrink: 0;
+      flex-shrink:
+        0;
+
     }
 
 
@@ -292,13 +422,18 @@
 
     .controls {
 
-      display: flex;
+      display:
+        flex;
 
-      align-items: center;
+      align-items:
+        center;
 
-      gap: 5px;
+      gap:
+        5px;
 
-      flex-shrink: 0;
+      flex-shrink:
+        0;
+
     }
 
 
@@ -311,40 +446,47 @@
       background:
         rgba(255, 255, 255, 0.15);
 
-      color: white;
+      color:
+        white;
 
       border:
-        1px solid rgba(255, 255, 255, 0.4);
+        1px solid
+        rgba(255, 255, 255, 0.4);
 
-      width: 30px;
+      width:
+        30px;
 
-      height: 30px;
+      height:
+        30px;
 
-      border-radius: 50%;
+      border-radius:
+        50%;
 
-      cursor: pointer;
+      cursor:
+        pointer;
 
-      font-size: 0.8rem;
+      font-size:
+        0.8rem;
 
-      display: flex;
+      display:
+        flex;
 
-      justify-content: center;
+      justify-content:
+        center;
 
-      align-items: center;
+      align-items:
+        center;
 
       transition:
         background 0.2s,
         transform 0.1s;
 
-      /*
-        Evita que el botón se comprima
-      */
-      flex-shrink: 0;
+      flex-shrink:
+        0;
 
-      /*
-        Mejora la interacción táctil
-      */
-      -webkit-tap-highlight-color: transparent;
+      -webkit-tap-highlight-color:
+        transparent;
+
     }
 
 
@@ -355,66 +497,26 @@
 
       background:
         rgba(255, 255, 255, 0.4);
+
     }
 
 
     /* =========================================
-       AJUSTES PARA TELÉFONOS MUY ESTRECHOS
+       TELÉFONOS VERTICALES
     ========================================= */
 
-    @media (orientation: portrait) and (max-width: 380px) {
+    @media
+    (orientation: portrait) {
 
-      .bottom-bar {
+      .frame-overlay img {
 
-        gap: 5px;
+        /*
+          Marco específico 9:16
+        */
 
-        padding:
-          4px 7px;
-      }
+        content:
+          url("assets/frames/marco-kisscam-vertical.png");
 
-
-      .footer-text {
-
-        font-size:
-          0.72rem;
-
-        gap:
-          3px;
-      }
-
-
-      .Glass,
-      .heart {
-
-        font-size:
-          0.9rem;
-      }
-
-
-      .controls {
-
-        gap:
-          4px;
-      }
-
-
-      .btn-icon {
-
-        width:
-          28px;
-
-        height:
-          28px;
-
-        font-size:
-          0.75rem;
-      }
-
-
-      .divider {
-
-        height:
-          18px;
       }
 
     }
@@ -424,12 +526,26 @@
        PANTALLA HORIZONTAL
     ========================================= */
 
-    @media (orientation: landscape) {
+    @media
+    (orientation: landscape) {
+
+      .frame-overlay img {
+
+        /*
+          Marco específico 16:9
+        */
+
+        content:
+          url("assets/frames/marco-kisscam-horizontal.png");
+
+      }
+
 
       .overlay {
 
         padding:
           8px 10px 10px 10px;
+
       }
 
 
@@ -437,6 +553,7 @@
 
         padding:
           4px 16px;
+
       }
 
 
@@ -447,6 +564,7 @@
 
         letter-spacing:
           1px;
+
       }
 
 
@@ -460,6 +578,7 @@
 
         max-width:
           calc(100vw - 20px);
+
       }
 
 
@@ -467,6 +586,7 @@
 
         font-size:
           0.8rem;
+
       }
 
 
@@ -474,6 +594,7 @@
 
         font-size:
           1rem;
+
       }
 
 
@@ -481,6 +602,7 @@
 
         font-size:
           1rem;
+
       }
 
 
@@ -494,6 +616,79 @@
 
         font-size:
           0.8rem;
+
+      }
+
+    }
+
+
+    /* =========================================
+       TELÉFONOS MUY ESTRECHOS
+    ========================================= */
+
+    @media
+    (orientation: portrait)
+    and (max-width: 380px) {
+
+
+      .bottom-bar {
+
+        gap:
+          5px;
+
+        padding:
+          4px 7px;
+
+      }
+
+
+      .footer-text {
+
+        font-size:
+          0.72rem;
+
+        gap:
+          3px;
+
+      }
+
+
+      .Glass,
+      .heart {
+
+        font-size:
+          0.9rem;
+
+      }
+
+
+      .controls {
+
+        gap:
+          4px;
+
+      }
+
+
+      .btn-icon {
+
+        width:
+          28px;
+
+        height:
+          28px;
+
+        font-size:
+          0.75rem;
+
+      }
+
+
+      .divider {
+
+        height:
+          18px;
+
       }
 
     }
@@ -508,7 +703,7 @@
 
 
   <!-- =========================================
-       APLICACIÓN PRINCIPAL
+       APLICACIÓN
   ========================================= -->
 
   <div
@@ -517,7 +712,9 @@
   >
 
 
-    <!-- VIDEO DE LA CÁMARA -->
+    <!-- =======================================
+         CÁMARA
+    ======================================== -->
 
     <video
       id="camera"
@@ -527,18 +724,39 @@
     ></video>
 
 
-    <!-- =========================================
-         CAPA SUPERIOR DE INTERFAZ
-    ========================================= -->
+    <!-- =======================================
+         MARCO DECORATIVO
 
-    <div class="overlay">
+         El archivo cambia automáticamente
+         dependiendo de la orientación.
+    ======================================== -->
+
+    <picture
+      class="frame-overlay"
+    >
+
+      <img
+        src="assets/frames/marco-kisscam-horizontal.png"
+        alt=""
+      >
+
+    </picture>
 
 
-      <!-- =======================================
-           ENCABEZADO
-      ======================================== -->
+    <!-- =======================================
+         INTERFAZ
+    ======================================== -->
 
-      <div class="header">
+    <div
+      class="overlay"
+    >
+
+
+      <!-- HEADER -->
+
+      <div
+        class="header"
+      >
 
         <h1>
           💋 KISS CAM 💋
@@ -547,18 +765,22 @@
       </div>
 
 
-      <!-- =======================================
-           BARRA INFERIOR
-      ======================================== -->
+      <!-- BARRA INFERIOR -->
 
-      <div class="bottom-bar">
+      <div
+        class="bottom-bar"
+      >
 
 
         <!-- TEXTO -->
 
-        <div class="footer-text">
+        <div
+          class="footer-text"
+        >
 
-          <span class="Glass">
+          <span
+            class="Glass"
+          >
             🍺
           </span>
 
@@ -566,7 +788,9 @@
             ¡Beso o Shot!
           </span>
 
-          <span class="heart">
+          <span
+            class="heart"
+          >
             ❤️
           </span>
 
@@ -575,12 +799,16 @@
 
         <!-- SEPARADOR -->
 
-        <div class="divider"></div>
+        <div
+          class="divider"
+        ></div>
 
 
         <!-- CONTROLES -->
 
-        <div class="controls">
+        <div
+          class="controls"
+        >
 
 
           <!-- CAMBIAR CÁMARA -->
@@ -627,17 +855,23 @@
 
 
     /* =========================================
-       REFERENCIAS A ELEMENTOS
+       ELEMENTOS
     ========================================= */
 
     const video =
-      document.getElementById('camera');
+      document.getElementById(
+        'camera'
+      );
 
     const switchBtn =
-      document.getElementById('switch-cam');
+      document.getElementById(
+        'switch-cam'
+      );
 
     const fullscreenBtn =
-      document.getElementById('fullscreen');
+      document.getElementById(
+        'fullscreen'
+      );
 
 
     /* =========================================
@@ -673,18 +907,24 @@
 
     /* =========================================
        WAKE LOCK
-
-       Evita que el teléfono apague
-       la pantalla durante la Kiss Cam.
     ========================================= */
+
+    let wakeLock =
+      null;
+
 
     async function requestWakeLock() {
 
       try {
 
-        if ('wakeLock' in navigator) {
+        if (
+          'wakeLock' in navigator
+        ) {
 
-          await navigator.wakeLock.request('screen');
+          wakeLock =
+            await navigator.wakeLock.request(
+              'screen'
+            );
 
         }
 
@@ -701,19 +941,48 @@
 
 
     /* =========================================
+       RECUPERAR WAKE LOCK
+       DESPUÉS DE VOLVER A LA PÁGINA
+    ========================================= */
+
+    document.addEventListener(
+      'visibilitychange',
+      () => {
+
+        if (
+          document.visibilityState ===
+          'visible'
+        ) {
+
+          requestWakeLock();
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
        INICIAR CÁMARA
     ========================================= */
 
     async function startCamera() {
 
 
-      /* Detener cámara anterior */
+      /*
+        Detener stream anterior
+      */
 
-      if (currentStream) {
+      if (
+        currentStream
+      ) {
 
         currentStream
           .getTracks()
-          .forEach(track => track.stop());
+          .forEach(
+            track =>
+              track.stop()
+          );
 
       }
 
@@ -721,61 +990,73 @@
       try {
 
 
-        /* Solicitar acceso a cámara */
+        /*
+          Solicitar cámara
+        */
 
         const stream =
-          await navigator.mediaDevices.getUserMedia({
+          await navigator.mediaDevices
+            .getUserMedia({
 
-            video: {
+              video: {
 
-              facingMode:
-                facingMode,
+                facingMode:
+                  facingMode,
 
-              /*
-                Resolución ideal.
-                El navegador elegirá
-                la mejor disponible.
-              */
+                width: {
 
-              width: {
-                ideal: 1920
+                  ideal:
+                    1920
+
+                },
+
+                height: {
+
+                  ideal:
+                    1080
+
+                }
+
               },
 
-              height: {
-                ideal: 1080
-              }
+              audio:
+                false
 
-            },
-
-            audio:
-              false
-
-          });
+            });
 
 
-        /* Guardar stream */
+        /*
+          Guardar stream
+        */
 
         currentStream =
           stream;
 
 
-        /* Mostrar cámara */
+        /*
+          Mostrar cámara
+        */
 
         video.srcObject =
           stream;
 
 
-        /* Obtener pista de video */
+        /*
+          Obtener pista de video
+        */
 
         videoTrack =
-          stream.getVideoTracks()[0];
+          stream
+            .getVideoTracks()[0];
 
 
-        /* =====================================
-           CONFIGURAR ZOOM
-        ===================================== */
+        /*
+          Configurar zoom
+        */
 
-        if (videoTrack) {
+        if (
+          videoTrack
+        ) {
 
 
           const capabilities =
@@ -784,12 +1065,9 @@
               : {};
 
 
-          /*
-            Verificar si el dispositivo
-            permite zoom mediante API.
-          */
-
-          if ('zoom' in capabilities) {
+          if (
+            'zoom' in capabilities
+          ) {
 
 
             minZoom =
@@ -798,44 +1076,48 @@
             maxZoom =
               capabilities.zoom.max || 1;
 
-
-            /*
-              Comenzar siempre
-              con zoom mínimo.
-            */
-
             currentZoom =
               minZoom;
 
 
             /*
-              Aplicar zoom inicial.
+              Aplicar zoom mínimo
             */
 
-            await videoTrack.applyConstraints({
+            await videoTrack
+              .applyConstraints({
 
-              advanced: [
-                {
-                  zoom:
-                    minZoom
+                advanced: [
+
+                  {
+
+                    zoom:
+                      minZoom
+
+                  }
+
+                ]
+
+              })
+              .catch(
+                e => {
+
+                  console.log(
+                    "Error aplicando zoom inicial:",
+                    e
+                  );
+
                 }
-              ]
-
-            }).catch(e => {
-
-              console.log(
-                "Error aplicando zoom inicial:",
-                e
               );
-
-            });
 
           }
 
         }
 
 
-        /* Mantener pantalla encendida */
+        /*
+          Mantener pantalla encendida
+        */
 
         requestWakeLock();
 
@@ -855,10 +1137,12 @@
 
 
     /* =========================================
-       CALCULAR DISTANCIA ENTRE DOS DEDOS
+       DISTANCIA ENTRE DOS DEDOS
     ========================================= */
 
-    function getDistance(touches) {
+    function getDistance(
+      touches
+    ) {
 
 
       const dx =
@@ -880,7 +1164,7 @@
 
 
     /* =========================================
-       INICIO DEL PINCH ZOOM
+       INICIO PINCH ZOOM
     ========================================= */
 
     window.addEventListener(
@@ -893,7 +1177,9 @@
         ) {
 
           initialPinchDistance =
-            getDistance(e.touches);
+            getDistance(
+              e.touches
+            );
 
         }
 
@@ -902,7 +1188,7 @@
 
 
     /* =========================================
-       MOVIMIENTO DEL PINCH ZOOM
+       MOVIMIENTO PINCH ZOOM
     ========================================= */
 
     window.addEventListener(
@@ -911,9 +1197,13 @@
 
 
         if (
+
           e.touches.length === 2 &&
+
           initialPinchDistance &&
+
           videoTrack
+
         ) {
 
 
@@ -929,49 +1219,55 @@
 
 
             const currentDistance =
-              getDistance(e.touches);
+              getDistance(
+                e.touches
+              );
 
-
-            /*
-              Sensibilidad del zoom
-            */
 
             const diff =
+
               (
                 currentDistance -
                 initialPinchDistance
               ) * 0.01;
 
 
-            /*
-              Calcular nuevo zoom
-              dentro de los límites
-              del dispositivo.
-            */
-
             let newZoom =
+
               Math.min(
+
                 Math.max(
-                  currentZoom + diff,
+
+                  currentZoom +
+                  diff,
+
                   minZoom
+
                 ),
+
                 maxZoom
+
               );
 
 
             try {
 
 
-              await videoTrack.applyConstraints({
+              await videoTrack
+                .applyConstraints({
 
-                advanced: [
-                  {
-                    zoom:
-                      newZoom
-                  }
-                ]
+                  advanced: [
 
-              });
+                    {
+
+                      zoom:
+                        newZoom
+
+                    }
+
+                  ]
+
+                });
 
 
               currentZoom =
@@ -1033,8 +1329,11 @@
 
 
         facingMode =
+
           facingMode === "user"
+
             ? "environment"
+
             : "user";
 
 
@@ -1054,7 +1353,9 @@
 
 
         const app =
-          document.getElementById('app');
+          document.getElementById(
+            'app'
+          );
 
 
         if (
@@ -1064,13 +1365,15 @@
 
           app
             .requestFullscreen()
-            .catch(err => {
+            .catch(
+              err => {
 
-              alert(
-                err.message
-              );
+                alert(
+                  err.message
+                );
 
-            });
+              }
+            );
 
 
         } else {
@@ -1095,4 +1398,5 @@
 
 
 </body>
+
 </html>
