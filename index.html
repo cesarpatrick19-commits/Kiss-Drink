@@ -15,7 +15,7 @@
   <style>
 
     /* =========================================
-       RESET GENERAL
+       RESET
     ========================================= */
 
     * {
@@ -33,7 +33,7 @@
 
       overflow: hidden;
 
-      background-color: #000;
+      background: #000;
 
       font-family:
         'Segoe UI',
@@ -41,6 +41,13 @@
         Geneva,
         Verdana,
         sans-serif;
+
+      /*
+        Evita comportamientos táctiles
+        no deseados en móviles.
+      */
+
+      touch-action: manipulation;
 
     }
 
@@ -58,13 +65,13 @@
 
       overflow: hidden;
 
-      background-color: #000;
+      background: #000;
 
     }
 
 
     /* =========================================
-       VIDEO DE LA CÁMARA
+       VIDEO
     ========================================= */
 
     video {
@@ -90,133 +97,82 @@
        MARCO DECORATIVO
     ========================================= */
 
-.frame-overlay {
-  position: absolute;
+    .frame-overlay {
 
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+      position: absolute;
 
-  width: 100%;
-  height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
 
-  margin: 0;
-  padding: 0;
+      width: 100%;
+      height: 100%;
 
-  display: block;
+      margin: 0;
+      padding: 0;
 
-  pointer-events: none;
+      display: block;
 
-  z-index: 10;
-}
+      pointer-events: none;
 
-.frame-overlay img {
-  position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  margin: 0;
-  padding: 0;
-
-  display: block;
-
-  object-fit: fill;
-
-  pointer-events: none;
-}
-
-
-    /* =========================================
-       INTERFAZ SUPERIOR
-    ========================================= */
-.overlay {
-  position: absolute;
-
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  pointer-events: none;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: flex-end;
-
-  align-items: center;
-
-  padding:
-    10px;
-
-  z-index: 20;
-}
-
-    /* =========================================
-       HEADER KISS CAM
-    ========================================= */
-
-    .header {
-
-      background:
-        rgba(255, 255, 255, 0.9);
-
-      padding:
-        5px 16px;
-
-      border-radius:
-        30px;
-
-      border:
-        2px solid #ff4d6d;
-
-      box-shadow:
-        0 4px 10px
-        rgba(0, 0, 0, 0.25);
-
-      backdrop-filter:
-        blur(4px);
-
-      pointer-events:
-        auto;
-
-      flex-shrink:
-        0;
+      z-index: 10;
 
     }
 
 
-    .header h1 {
+    .frame-overlay img {
 
-      color:
-        #c9184a;
+      position: absolute;
 
-      font-size:
-        1rem;
+      top: 0;
+      left: 0;
 
-      letter-spacing:
-        1px;
+      width: 100%;
+      height: 100%;
 
-      text-transform:
-        uppercase;
+      margin: 0;
+      padding: 0;
 
-      font-weight:
-        800;
+      display: block;
 
-      white-space:
-        nowrap;
+      object-fit: fill;
 
-      line-height:
-        1.2;
+      pointer-events: none;
+
+    }
+
+
+    /* =========================================
+       CAPA DE CONTROLES
+    ========================================= */
+
+    .overlay {
+
+      position: absolute;
+
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      pointer-events: none;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: flex-end;
+
+      align-items: center;
+
+      padding:
+        10px;
+
+      z-index: 20;
 
     }
 
@@ -227,17 +183,13 @@
 
     .bottom-bar {
 
-      pointer-events:
-        auto;
+      pointer-events: auto;
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      gap:
-        7px;
+      gap: 7px;
 
       background:
         rgba(0, 0, 0, 0.65);
@@ -260,16 +212,46 @@
         rgba(0, 0, 0, 0.3);
 
       max-width:
-        calc(100vw - 16px);
+        calc(100vw - 20px);
 
       flex-shrink:
         0;
+
+      /*
+        Animación de aparición.
+      */
+
+      opacity: 1;
+
+      transform:
+        translateY(0);
+
+      transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
 
     }
 
 
     /* =========================================
-       TEXTO INFERIOR
+       BARRA OCULTA
+    ========================================= */
+
+    .bottom-bar.hidden {
+
+      opacity: 0;
+
+      transform:
+        translateY(30px);
+
+      pointer-events:
+        none;
+
+    }
+
+
+    /* =========================================
+       TEXTO
     ========================================= */
 
     .footer-text {
@@ -292,16 +274,6 @@
       font-weight:
         600;
 
-      /*
-        Evita que:
-
-        ¡Beso
-        o
-        Shot!
-
-        se divida en varias líneas.
-      */
-
       white-space:
         nowrap;
 
@@ -315,7 +287,7 @@
 
 
     /* =========================================
-       EMOJI CERVEZA
+       CERVEZA
     ========================================= */
 
     .Glass {
@@ -366,17 +338,13 @@
     @keyframes pulse {
 
       from {
-
         transform:
           scale(1);
-
       }
 
       to {
-
         transform:
           scale(1.3);
-
       }
 
     }
@@ -474,6 +442,9 @@
       -webkit-tap-highlight-color:
         transparent;
 
+      user-select:
+        none;
+
     }
 
 
@@ -489,7 +460,81 @@
 
 
     /* =========================================
-       TELÉFONOS VERTICALES
+       BOTÓN DE BLOQUEO
+    ========================================= */
+
+    #lock-controls {
+
+      font-size:
+        0.85rem;
+
+    }
+
+
+    /* =========================================
+       INDICADOR DE BLOQUEO
+    ========================================= */
+
+    .lock-indicator {
+
+      position: absolute;
+
+      top: 12px;
+      right: 12px;
+
+      z-index: 30;
+
+      background:
+        rgba(0, 0, 0, 0.55);
+
+      color:
+        white;
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.25);
+
+      border-radius:
+        20px;
+
+      padding:
+        5px 9px;
+
+      font-size:
+        0.7rem;
+
+      opacity:
+        0;
+
+      transform:
+        translateY(-10px);
+
+      pointer-events:
+        none;
+
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+
+      backdrop-filter:
+        blur(5px);
+
+    }
+
+
+    .lock-indicator.visible {
+
+      opacity:
+        1;
+
+      transform:
+        translateY(0);
+
+    }
+
+
+    /* =========================================
+       ORIENTACIÓN VERTICAL
     ========================================= */
 
     @media
@@ -497,12 +542,10 @@
 
       .frame-overlay img {
 
-        /*
-          Marco específico 9:16
-        */
-
         content:
-          url("assets/frames/marco-kisscam-vertical.png");
+          url(
+            "assets/frames/marco-kisscam-vertical.png"
+          );
 
       }
 
@@ -510,7 +553,7 @@
 
 
     /* =========================================
-       PANTALLA HORIZONTAL
+       ORIENTACIÓN HORIZONTAL
     ========================================= */
 
     @media
@@ -518,12 +561,10 @@
 
       .frame-overlay img {
 
-        /*
-          Marco específico 16:9
-        */
-
         content:
-          url("assets/frames/marco-kisscam-horizontal.png");
+          url(
+            "assets/frames/marco-kisscam-horizontal.png"
+          );
 
       }
 
@@ -536,35 +577,10 @@
       }
 
 
-      .header {
-
-        padding:
-          4px 16px;
-
-      }
-
-
-      .header h1 {
-
-        font-size:
-          0.95rem;
-
-        letter-spacing:
-          1px;
-
-      }
-
-
       .bottom-bar {
 
         padding:
           4px 10px;
-
-        gap:
-          7px;
-
-        max-width:
-          calc(100vw - 20px);
 
       }
 
@@ -576,47 +592,16 @@
 
       }
 
-
-      .Glass {
-
-        font-size:
-          1rem;
-
-      }
-
-
-      .heart {
-
-        font-size:
-          1rem;
-
-      }
-
-
-      .btn-icon {
-
-        width:
-          30px;
-
-        height:
-          30px;
-
-        font-size:
-          0.8rem;
-
-      }
-
     }
 
 
     /* =========================================
-       TELÉFONOS MUY ESTRECHOS
+       PANTALLAS PEQUEÑAS
     ========================================= */
 
     @media
     (orientation: portrait)
     and (max-width: 380px) {
-
 
       .bottom-bar {
 
@@ -634,26 +619,6 @@
         font-size:
           0.72rem;
 
-        gap:
-          3px;
-
-      }
-
-
-      .Glass,
-      .heart {
-
-        font-size:
-          0.9rem;
-
-      }
-
-
-      .controls {
-
-        gap:
-          4px;
-
       }
 
 
@@ -667,14 +632,6 @@
 
         font-size:
           0.75rem;
-
-      }
-
-
-      .divider {
-
-        height:
-          18px;
 
       }
 
@@ -712,10 +669,7 @@
 
 
     <!-- =======================================
-         MARCO DECORATIVO
-
-         El archivo cambia automáticamente
-         dependiendo de la orientación.
+         MARCO
     ======================================== -->
 
     <picture
@@ -731,16 +685,36 @@
 
 
     <!-- =======================================
-         INTERFAZ
+         INDICADOR DE BLOQUEO
+    ======================================== -->
+
+    <div
+      class="lock-indicator"
+      id="lock-indicator"
+    >
+
+      🔒 Controles bloqueados
+
+    </div>
+
+
+    <!-- =======================================
+         CAPA DE CONTROLES
     ======================================== -->
 
     <div
       class="overlay"
+      id="overlay"
     >
-      <!-- BARRA INFERIOR -->
+
+
+      <!-- =====================================
+           BARRA
+      ====================================== -->
 
       <div
         class="bottom-bar"
+        id="bottom-bar"
       >
 
 
@@ -807,6 +781,18 @@
           </button>
 
 
+          <!-- BLOQUEAR CONTROLES -->
+
+          <button
+            class="btn-icon"
+            id="lock-controls"
+            title="Bloquear controles"
+            aria-label="Bloquear controles"
+          >
+            🔓
+          </button>
+
+
         </div>
 
 
@@ -835,10 +821,12 @@
         'camera'
       );
 
+
     const switchBtn =
       document.getElementById(
         'switch-cam'
       );
+
 
     const fullscreenBtn =
       document.getElementById(
@@ -846,32 +834,55 @@
       );
 
 
+    const lockBtn =
+      document.getElementById(
+        'lock-controls'
+      );
+
+
+    const bottomBar =
+      document.getElementById(
+        'bottom-bar'
+      );
+
+
+    const lockIndicator =
+      document.getElementById(
+        'lock-indicator'
+      );
+
+
     /* =========================================
-       VARIABLES DE CÁMARA
+       CÁMARA
     ========================================= */
 
     let currentStream =
       null;
 
+
     let videoTrack =
       null;
+
 
     let facingMode =
       "environment";
 
 
     /* =========================================
-       VARIABLES DE ZOOM
+       ZOOM
     ========================================= */
 
     let initialPinchDistance =
       null;
 
+
     let currentZoom =
       1;
 
+
     let minZoom =
       1;
+
 
     let maxZoom =
       1;
@@ -884,6 +895,33 @@
     let wakeLock =
       null;
 
+
+    /* =========================================
+       CONTROLES
+    ========================================= */
+
+    let controlsLocked =
+      false;
+
+
+    let hideControlsTimer =
+      null;
+
+
+    /*
+      Tiempo que permanecen visibles
+      después de tocar la pantalla.
+
+      5000 = 5 segundos.
+    */
+
+    const CONTROL_TIMEOUT =
+      5000;
+
+
+    /* =========================================
+       WAKE LOCK
+    ========================================= */
 
     async function requestWakeLock() {
 
@@ -913,22 +951,313 @@
 
 
     /* =========================================
-       RECUPERAR WAKE LOCK
-       DESPUÉS DE VOLVER A LA PÁGINA
+       MOSTRAR CONTROLES
+    ========================================= */
+
+    function showControls() {
+
+
+      /*
+        Si están bloqueados,
+        no hacemos nada.
+      */
+
+      if (
+        controlsLocked
+      ) {
+
+        return;
+
+      }
+
+
+      bottomBar.classList.remove(
+        'hidden'
+      );
+
+
+      /*
+        Cancelar temporizador anterior.
+      */
+
+      clearTimeout(
+        hideControlsTimer
+      );
+
+
+      /*
+        Ocultar automáticamente
+        después de 5 segundos.
+      */
+
+      hideControlsTimer =
+        setTimeout(
+          hideControls,
+          CONTROL_TIMEOUT
+        );
+
+    }
+
+
+    /* =========================================
+       OCULTAR CONTROLES
+    ========================================= */
+
+    function hideControls() {
+
+
+      /*
+        Si están bloqueados,
+        no ocultamos mediante
+        el temporizador.
+      */
+
+      if (
+        controlsLocked
+      ) {
+
+        return;
+
+      }
+
+
+      bottomBar.classList.add(
+        'hidden'
+      );
+
+    }
+
+
+    /* =========================================
+       BLOQUEAR CONTROLES
+    ========================================= */
+
+    function lockControls() {
+
+
+      controlsLocked =
+        true;
+
+
+      /*
+        Ocultar barra inmediatamente.
+      */
+
+      bottomBar.classList.add(
+        'hidden'
+      );
+
+
+      /*
+        Cambiar icono.
+      */
+
+      lockBtn.textContent =
+        '🔒';
+
+
+      lockBtn.title =
+        'Mantén presionado para desbloquear';
+
+
+      /*
+        Mostrar indicador.
+      */
+
+      lockIndicator.classList.add(
+        'visible'
+      );
+
+
+      /*
+        Ocultar indicador después
+        de 3 segundos.
+      */
+
+      setTimeout(
+        () => {
+
+          lockIndicator.classList.remove(
+            'visible'
+          );
+
+        },
+        3000
+      );
+
+    }
+
+
+    /* =========================================
+       DESBLOQUEAR CONTROLES
+    ========================================= */
+
+    function unlockControls() {
+
+
+      controlsLocked =
+        false;
+
+
+      /*
+        Cambiar icono.
+      */
+
+      lockBtn.textContent =
+        '🔓';
+
+
+      lockBtn.title =
+        'Bloquear controles';
+
+
+      /*
+        Mostrar controles.
+      */
+
+      showControls();
+
+    }
+
+
+    /* =========================================
+       BOTÓN DE BLOQUEO
+    ========================================= */
+
+    let lockPressTimer =
+      null;
+
+
+    /*
+      Inicio de pulsación.
+    */
+
+    lockBtn.addEventListener(
+      'pointerdown',
+      () => {
+
+
+        /*
+          Solo necesitamos
+          mantener presionado
+          cuando está bloqueado.
+        */
+
+        if (
+          !controlsLocked
+        ) {
+
+          return;
+
+        }
+
+
+        lockPressTimer =
+          setTimeout(
+            unlockControls,
+            2000
+          );
+
+      }
+    );
+
+
+    /*
+      Cancelar pulsación.
+    */
+
+    lockBtn.addEventListener(
+      'pointerup',
+      () => {
+
+        clearTimeout(
+          lockPressTimer
+        );
+
+      }
+    );
+
+
+    lockBtn.addEventListener(
+      'pointercancel',
+      () => {
+
+        clearTimeout(
+          lockPressTimer
+        );
+
+      }
+    );
+
+
+    /*
+      Cuando está desbloqueado,
+      un toque normal bloquea.
+    */
+
+    lockBtn.addEventListener(
+      'click',
+      () => {
+
+
+        if (
+          !controlsLocked
+        ) {
+
+          lockControls();
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       INTERACCIÓN CON PANTALLA
     ========================================= */
 
     document.addEventListener(
-      'visibilitychange',
-      () => {
+      'pointerdown',
+      (e) => {
+
+
+        /*
+          Ignorar botones.
+
+          Los botones manejan
+          sus propios eventos.
+        */
 
         if (
-          document.visibilityState ===
-          'visible'
+          e.target.closest(
+            'button'
+          )
         ) {
 
-          requestWakeLock();
+          return;
 
         }
+
+
+        /*
+          Si los controles están bloqueados,
+          no mostrar nada.
+        */
+
+        if (
+          controlsLocked
+        ) {
+
+          return;
+
+        }
+
+
+        /*
+          Mostrar controles.
+        */
+
+        showControls();
 
       }
     );
@@ -942,7 +1271,7 @@
 
 
       /*
-        Detener stream anterior
+        Detener cámara anterior.
       */
 
       if (
@@ -961,10 +1290,6 @@
 
       try {
 
-
-        /*
-          Solicitar cámara
-        */
 
         const stream =
           await navigator.mediaDevices
@@ -997,25 +1322,13 @@
             });
 
 
-        /*
-          Guardar stream
-        */
-
         currentStream =
           stream;
 
 
-        /*
-          Mostrar cámara
-        */
-
         video.srcObject =
           stream;
 
-
-        /*
-          Obtener pista de video
-        */
 
         videoTrack =
           stream
@@ -1023,7 +1336,7 @@
 
 
         /*
-          Configurar zoom
+          Configurar zoom.
         */
 
         if (
@@ -1045,16 +1358,14 @@
             minZoom =
               capabilities.zoom.min || 1;
 
+
             maxZoom =
               capabilities.zoom.max || 1;
+
 
             currentZoom =
               minZoom;
 
-
-            /*
-              Aplicar zoom mínimo
-            */
 
             await videoTrack
               .applyConstraints({
@@ -1072,14 +1383,11 @@
 
               })
               .catch(
-                e => {
-
+                e =>
                   console.log(
-                    "Error aplicando zoom inicial:",
+                    "Error zoom inicial:",
                     e
-                  );
-
-                }
+                  )
               );
 
           }
@@ -1088,10 +1396,17 @@
 
 
         /*
-          Mantener pantalla encendida
+          Wake Lock.
         */
 
         requestWakeLock();
+
+
+        /*
+          Mostrar controles al iniciar.
+        */
+
+        showControls();
 
 
       } catch (err) {
@@ -1109,7 +1424,7 @@
 
 
     /* =========================================
-       DISTANCIA ENTRE DOS DEDOS
+       ZOOM TÁCTIL
     ========================================= */
 
     function getDistance(
@@ -1135,10 +1450,6 @@
     }
 
 
-    /* =========================================
-       INICIO PINCH ZOOM
-    ========================================= */
-
     window.addEventListener(
       'touchstart',
       (e) => {
@@ -1148,20 +1459,18 @@
           e.touches.length === 2
         ) {
 
+
           initialPinchDistance =
             getDistance(
               e.touches
             );
+
 
         }
 
       }
     );
 
-
-    /* =========================================
-       MOVIMIENTO PINCH ZOOM
-    ========================================= */
 
     window.addEventListener(
       'touchmove',
@@ -1204,7 +1513,7 @@
               ) * 0.01;
 
 
-            let newZoom =
+            const newZoom =
 
               Math.min(
 
@@ -1268,10 +1577,6 @@
       }
     );
 
-
-    /* =========================================
-       FINALIZAR PINCH ZOOM
-    ========================================= */
 
     window.addEventListener(
       'touchend',
@@ -1338,13 +1643,10 @@
           app
             .requestFullscreen()
             .catch(
-              err => {
-
+              err =>
                 alert(
                   err.message
-                );
-
-              }
+                )
             );
 
 
@@ -1360,7 +1662,31 @@
 
 
     /* =========================================
-       INICIAR APLICACIÓN
+       RECUPERAR WAKE LOCK
+    ========================================= */
+
+    document.addEventListener(
+      'visibilitychange',
+      () => {
+
+
+        if (
+          document.visibilityState ===
+          'visible'
+        ) {
+
+
+          requestWakeLock();
+
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       INICIAR
     ========================================= */
 
     startCamera();
