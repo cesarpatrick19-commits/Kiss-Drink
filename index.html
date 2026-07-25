@@ -471,14 +471,14 @@
 
 /* =========================================
    CANDADO DE CONTROLES BLOQUEADOS
-   ESQUINA SUPERIOR IZQUIERDA
+   ESQUINA INFERIOR IZQUIERDA
 ========================================= */
 
 .lock-indicator {
 
   position: absolute;
 
-  top: 12px;
+  buttom: 12px;
   left: 12px;
 
   z-index: 40;
@@ -496,7 +496,7 @@
 
   border:
     1px solid
-    rgba(168, 85, 247, 0.55);
+    rgba(181, 126, 220, 0.55);
 
   border-radius:
     50%;
@@ -519,7 +519,7 @@
     rgba(0, 0, 0, 0.35),
 
     0 0 8px
-    rgba(168, 85, 247, 0.25);
+    rgba(181, 126, 220, 0.25);
 
   backdrop-filter:
     blur(5px);
@@ -530,11 +530,128 @@
   user-select:
     none;
 
+  /*
+    Evita el resaltado azul
+    de Chrome/Android.
+  */
+
+  -webkit-tap-highlight-color:
+    transparent;
+
+  /*
+    Evita gestos del navegador
+    mientras se mantiene pulsado.
+  */
+
   touch-action:
     none;
 
 }
 
+/* =========================================
+   SVG DEL CANDADO
+========================================= */
+
+.lock-indicator svg {
+
+  width:
+    24px;
+
+  height:
+    24px;
+
+  display:
+    block;
+
+  pointer-events:
+    none;
+
+}
+
+
+/* =========================================
+   CANDADO VISIBLE
+========================================= */
+
+.lock-indicator.visible {
+
+  opacity:
+    1;
+
+  transform:
+    scale(1);
+
+  pointer-events:
+    auto;
+
+}
+
+
+/* =========================================
+   ESTADO:
+   MANTENIENDO PRESIONADO
+========================================= */
+
+.lock-indicator.unlocking {
+
+  /*
+    El botón se mantiene ligeramente
+    iluminado durante los 2 segundos.
+  */
+
+  border-color:
+    rgba(181, 126, 220, 1);
+
+  background:
+    rgba(181, 126, 220, 0.25);
+
+  box-shadow:
+
+    0 3px 10px
+    rgba(0, 0, 0, 0.35),
+
+    0 0 12px
+    rgba(181, 126, 220, 0.65);
+
+}
+
+
+/* =========================================
+   ANIMACIÓN DEL SVG MIENTRAS SE PRESIONA
+========================================= */
+
+.lock-indicator.unlocking svg {
+
+  animation:
+    lockPulse 2s linear forwards;
+
+}
+
+
+@keyframes lockPulse {
+
+  0% {
+
+    transform:
+      scale(1);
+
+  }
+
+  50% {
+
+    transform:
+      scale(1.12);
+
+  }
+
+  100% {
+
+    transform:
+      scale(1.18);
+
+  }
+
+}
 
 /* =========================================
    SVG DEL CANDADO
@@ -683,7 +800,7 @@ and (max-width: 380px) {
     height:
       34px;
 
-    top:
+    buttom:
       10px;
 
     left:
@@ -872,7 +989,7 @@ and (max-width: 380px) {
     width="20"
     height="20"
     viewBox="0 0 24 24"
-    fill="##B57EDC"
+    fill="#B57EDC"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path d="M18 8h-1V6c0-2.76-2.24-5-5-5-2.28 0-4.27 1.54-4.84 3.75-.14.54.18 1.08.72 1.23.54.14 1.08-.18 1.22-.72C9.53 3.83 10.94 2.9 12 2.9c1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
@@ -1243,67 +1360,132 @@ and (max-width: 380px) {
        MANTENER PRESIONADO PARA DESBLOQUEAR
     ========================================= */
 
-    lockIndicator.addEventListener(
-      'pointerdown',
-      (e) => {
+lockIndicator.addEventListener(
+  'pointerdown',
+  (e) => {
+
+    e.preventDefault();
+
+    e.stopPropagation();
 
 
-        /*
-          Evitar que el evento
-          se propague.
-        */
+    /*
+      Activar estado visual
+      de "manteniendo presionado".
+    */
 
-        e.preventDefault();
+    lockIndicator.classList.add(
+      'unlocking'
+    );
 
-        e.stopPropagation();
+
+    /*
+      Mantener el control del dedo
+      aunque se mueva ligeramente.
+    */
+
+    if (
+      lockIndicator.setPointerCapture
+    ) {
+
+      lockIndicator.setPointerCapture(
+        e.pointerId
+      );
+
+    }
 
 
-        /*
-          Iniciar temporizador.
+    /*
+      Iniciar temporizador
+      de 2 segundos.
+    */
 
-          Hay que mantener presionado
-          durante 2 segundos.
-        */
+    unlockPressTimer =
+      setTimeout(
+        () => {
 
-        unlockPressTimer =
-          setTimeout(
-            () => {
+          /*
+            Quitar estado visual.
+          */
 
-              unlockControls();
-
-            },
-            2000
+          lockIndicator.classList.remove(
+            'unlocking'
           );
 
-      }
-    );
+
+          /*
+            Desbloquear.
+          */
+
+          unlockControls();
+
+        },
+        2000
+      );
+
+  }
+);
 
 
     /* =========================================
        SOLTAR CANDADO
     ========================================= */
 
-    lockIndicator.addEventListener(
-      'pointerup',
-      (e) => {
+lockIndicator.addEventListener(
+  'pointerup',
+  (e) => {
+
+    e.preventDefault();
+
+    e.stopPropagation();
 
 
-        e.preventDefault();
+    /*
+      Cancelar temporizador
+      si soltamos antes de 2 segundos.
+    */
 
-        e.stopPropagation();
+    clearTimeout(
+      unlockPressTimer
+    );
 
 
-        /*
-          Cancelar si se soltó
-          antes de 2 segundos.
-        */
+    /*
+      Quitar efecto visual.
+    */
 
-        clearTimeout(
-          unlockPressTimer
+    lockIndicator.classList.remove(
+      'unlocking'
+    );
+
+
+    /*
+      Liberar captura del puntero.
+    */
+
+    if (
+      lockIndicator.releasePointerCapture
+    ) {
+
+      try {
+
+        lockIndicator.releasePointerCapture(
+          e.pointerId
         );
 
+      } catch (err) {
+
+        /*
+          Ignorar errores de captura
+          si el puntero ya fue liberado.
+        */
+
       }
-    );
+
+    }
+
+  }
+);
 
 
     /* =========================================
@@ -1311,17 +1493,20 @@ and (max-width: 380px) {
     ========================================= */
 
 
-    lockIndicator.addEventListener(
-      'pointerleave',
-      () => {
+lockIndicator.addEventListener(
+  'pointercancel',
+  () => {
 
-
-        clearTimeout(
-          unlockPressTimer
-        );
-
-      }
+    clearTimeout(
+      unlockPressTimer
     );
+
+    lockIndicator.classList.remove(
+      'unlocking'
+    );
+
+  }
+);
 
 
     /* =========================================
