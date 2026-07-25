@@ -294,7 +294,7 @@
        EMOJI CERVEZA
     ========================================= */
 
-    .Glass {
+    .glass {
 
       animation:
         pulse 0.9s infinite alternate;
@@ -469,7 +469,6 @@
 
     }
 
-
 /* =========================================
    CANDADO DE CONTROLES BLOQUEADOS
    ESQUINA SUPERIOR IZQUIERDA
@@ -479,53 +478,28 @@
 
   position: absolute;
 
-  /*
-    Movido desde la derecha
-    hacia la izquierda.
-  */
-
   top: 12px;
   left: 12px;
 
   z-index: 40;
 
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
 
   display: flex;
 
   align-items: center;
   justify-content: center;
 
-  /*
-    Verde inspirado en el marco.
-    Semitransparente para que
-    no tape demasiado la cámara.
-  */
-
   background:
-    rgba(74, 110, 85, 0.88);
-
-  color:
-    #ffffff;
-
-  /*
-    Borde verde más luminoso.
-  */
+    rgba(0, 0, 0, 0.45);
 
   border:
     1px solid
-    rgba(180, 220, 190, 0.75);
+    rgba(33, 161, 53, 0.55);
 
   border-radius:
     50%;
-
-  font-size:
-    0.9rem;
-
-  /*
-    Oculto inicialmente.
-  */
 
   opacity:
     0;
@@ -540,16 +514,12 @@
     opacity 0.3s ease,
     transform 0.3s ease;
 
-  /*
-    Efecto de profundidad.
-  */
-
   box-shadow:
     0 3px 10px
     rgba(0, 0, 0, 0.35),
 
     0 0 8px
-    rgba(100, 160, 120, 0.25);
+    rgba(33, 161, 53, 0.25);
 
   backdrop-filter:
     blur(5px);
@@ -566,10 +536,27 @@
 }
 
 
-/*
-  Estado visible cuando
-  los controles están bloqueados.
-*/
+/* =========================================
+   SVG DEL CANDADO
+========================================= */
+
+.lock-indicator svg {
+
+  width:
+    24px;
+
+  height:
+    24px;
+
+  display:
+    block;
+
+}
+
+
+/* =========================================
+   CANDADO VISIBLE
+========================================= */
 
 .lock-indicator.visible {
 
@@ -651,64 +638,71 @@
        PANTALLAS VERTICALES PEQUEÑAS
     ========================================= */
 
-    @media
-    (orientation: portrait)
-    and (max-width: 380px) {
+@media
+(orientation: portrait)
+and (max-width: 380px) {
 
-      .bottom-bar {
+  .bottom-bar {
 
-        gap:
-          5px;
+    gap:
+      5px;
 
-        padding:
-          4px 7px;
+    padding:
+      4px 7px;
 
-      }
-
-
-      .footer-text {
-
-        font-size:
-          0.72rem;
-
-      }
+  }
 
 
-      .btn-icon {
+  .footer-text {
 
-        width:
-          28px;
+    font-size:
+      0.72rem;
 
-        height:
-          28px;
-
-        font-size:
-          0.75rem;
-
-      }
+  }
 
 
-      .lock-indicator {
+  .btn-icon {
 
-        width:
-          30px;
+    width:
+      28px;
 
-        height:
-          30px;
+    height:
+      28px;
 
-        top:
-          10px;
+    font-size:
+      0.75rem;
 
-        left:
-          10px;
+  }
 
-        font-size:
-          0.8rem;
 
-      }
+  .lock-indicator {
 
-    }
+    width:
+      34px;
 
+    height:
+      34px;
+
+    top:
+      10px;
+
+    left:
+      10px;
+
+  }
+
+
+  .lock-indicator svg {
+
+    width:
+      21px;
+
+    height:
+      21px;
+
+  }
+
+}
 
   </style>
 
@@ -763,14 +757,24 @@
          mientras los controles están bloqueados.
     ======================================== -->
 
-    <div
-      class="lock-indicator"
-      id="lock-indicator"
-      title="Mantén presionado durante 2 segundos para desbloquear"
-      aria-label="Desbloquear controles"
-    >
-      🔒
-    </div>
+<div
+  class="lock-indicator"
+  id="lock-indicator"
+  title="Mantén presionado durante 2 segundos para desbloquear"
+  aria-label="Desbloquear controles"
+>
+
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="#21A135"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+  </svg>
+
+</div>
 
 
     <!-- =======================================
@@ -858,14 +862,22 @@
 
           <!-- BLOQUEAR CONTROLES -->
 
-          <button
-            class="btn-icon"
-            id="lock-controls"
-            title="Bloquear controles"
-            aria-label="Bloquear controles"
-          >
-            🔓
-          </button>
+<button
+  class="btn-icon"
+  id="lock-controls"
+  title="Bloquear controles"
+  aria-label="Bloquear controles"
+>
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="#21A135"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5-2.28 0-4.27 1.54-4.84 3.75-.14.54.18 1.08.72 1.23.54.14 1.08-.18 1.22-.72C9.53 3.83 10.94 2.9 12 2.9c1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+  </svg>
+</button>
 
 
         </div>
@@ -1297,18 +1309,6 @@
     /* =========================================
        CANCELAR DESBLOQUEO
     ========================================= */
-
-    lockIndicator.addEventListener(
-      'pointercancel',
-      () => {
-
-
-        clearTimeout(
-          unlockPressTimer
-        );
-
-      }
-    );
 
 
     lockIndicator.addEventListener(
