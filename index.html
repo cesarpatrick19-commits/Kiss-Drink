@@ -43,11 +43,6 @@
         Verdana,
         sans-serif;
 
-      /*
-        Permite controlar mejor
-        los gestos táctiles.
-      */
-
       touch-action: manipulation;
 
     }
@@ -137,10 +132,6 @@
 
       display: block;
 
-      /*
-        El PNG se adapta a toda la pantalla.
-      */
-
       object-fit: fill;
 
       pointer-events: none;
@@ -149,7 +140,7 @@
 
 
     /* =========================================
-       CAPA DE CONTROLES
+       CAPA GENERAL DE INTERFAZ
     ========================================= */
 
     .overlay {
@@ -166,32 +157,36 @@
 
       pointer-events: none;
 
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: flex-end;
-
-      align-items: center;
-
-      padding: 10px;
-
       z-index: 20;
 
     }
 
 
     /* =========================================
-       BARRA INFERIOR
+       BANNER INFERIOR
+       
+       MODO NORMAL:
+       Queda encima de los controles.
     ========================================= */
 
     .bottom-bar {
+
+      position: absolute;
+
+      left: 50%;
+
+      bottom: 58px;
+
+      transform:
+        translateX(-50%);
 
       pointer-events: auto;
 
       display: flex;
 
       align-items: center;
+
+      justify-content: center;
 
       gap: 7px;
 
@@ -221,32 +216,45 @@
       flex-shrink:
         0;
 
-      /*
-        Estado visible.
-      */
-
-      opacity: 1;
-
-      transform:
-        translateY(0);
+      opacity:
+        1;
 
       transition:
         opacity 0.35s ease,
+        bottom 0.35s ease,
         transform 0.35s ease;
 
     }
 
 
     /* =========================================
+       MODO PROYECCIÓN
+       
+       El banner baja hasta abajo.
+       
+       Esto libera el espacio que antes
+       ocupaban los controles.
+    ========================================= */
+
+    .projection-mode .bottom-bar {
+
+      bottom:
+        10px;
+
+    }
+
+
+    /* =========================================
        BARRA OCULTA
+       
+       Se utiliza cuando los controles
+       desaparecen temporalmente.
     ========================================= */
 
     .bottom-bar.hidden {
 
-      opacity: 0;
-
-      transform:
-        translateY(30px);
+      opacity:
+        0;
 
       pointer-events:
         none;
@@ -255,7 +263,7 @@
 
 
     /* =========================================
-       TEXTO DE LA BARRA
+       TEXTO DEL BANNER
     ========================================= */
 
     .footer-text {
@@ -270,6 +278,9 @@
         flex;
 
       align-items:
+        center;
+
+      justify-content:
         center;
 
       gap:
@@ -291,19 +302,22 @@
 
 
     /* =========================================
-       EMOJI CERVEZA
+       CORAZÓN
     ========================================= */
 
-    .glass {
+    .heart {
 
-      animation:
-        pulse 0.9s infinite alternate;
+      color:
+        #ff4d6d;
 
       font-size:
         1rem;
 
       line-height:
         1;
+
+      animation:
+        pulse 0.9s infinite alternate;
 
       flex-shrink:
         0;
@@ -312,13 +326,10 @@
 
 
     /* =========================================
-       CORAZÓN
+       CERVEZA
     ========================================= */
 
-    .heart {
-
-      color:
-        #ff4d6d;
+    .glass {
 
       font-size:
         1rem;
@@ -359,31 +370,21 @@
 
 
     /* =========================================
-       SEPARADOR
+       BARRA DE CONTROLES
+       
+       Está separada del banner.
     ========================================= */
 
-    .divider {
+    .controls-bar {
 
-      width:
-        1px;
+      position: absolute;
 
-      height:
-        20px;
+      left: 50%;
 
-      background:
-        rgba(255, 255, 255, 0.3);
+      bottom: 10px;
 
-      flex-shrink:
-        0;
-
-    }
-
-
-    /* =========================================
-       CONTROLES
-    ========================================= */
-
-    .controls {
+      transform:
+        translateX(-50%);
 
       display:
         flex;
@@ -391,11 +392,61 @@
       align-items:
         center;
 
-      gap:
-        5px;
+      justify-content:
+        center;
 
-      flex-shrink:
+      gap:
+        6px;
+
+      pointer-events:
+        auto;
+
+      opacity:
+        1;
+
+      transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+
+    }
+
+
+    /* =========================================
+       CONTROLES OCULTOS
+    ========================================= */
+
+    .controls-bar.hidden {
+
+      opacity:
         0;
+
+      transform:
+        translateX(-50%)
+        translateY(25px);
+
+      pointer-events:
+        none;
+
+    }
+
+
+    /* =========================================
+       MODO PROYECCIÓN
+       
+       Los controles desaparecen completamente.
+    ========================================= */
+
+    .projection-mode .controls-bar {
+
+      opacity:
+        0;
+
+      transform:
+        translateX(-50%)
+        translateY(25px);
+
+      pointer-events:
+        none;
 
     }
 
@@ -407,7 +458,7 @@
     .btn-icon {
 
       background:
-        rgba(255, 255, 255, 0.15);
+        rgba(0, 0, 0, 0.65);
 
       color:
         white;
@@ -417,10 +468,10 @@
         rgba(255, 255, 255, 0.4);
 
       width:
-        30px;
+        32px;
 
       height:
-        30px;
+        32px;
 
       border-radius:
         50%;
@@ -429,7 +480,7 @@
         pointer;
 
       font-size:
-        0.8rem;
+        0.85rem;
 
       display:
         flex;
@@ -469,224 +520,201 @@
 
     }
 
-/* =========================================
-   CANDADO DE CONTROLES BLOQUEADOS
-   ESQUINA INFERIOR IZQUIERDA
-========================================= */
 
-.lock-indicator {
+    /* =========================================
+       BOTÓN MODO PROYECCIÓN
+    ========================================= */
 
-  position: absolute;
+    #projection-mode {
 
-  buttom: 12px;
-  left: 12px;
+      border-color:
+        rgba(181, 126, 220, 0.7);
 
-  z-index: 40;
+    }
 
-  width: 38px;
-  height: 38px;
 
-  display: flex;
+    /* =========================================
+       CANDADO
+       
+       ESQUINA INFERIOR IZQUIERDA
+    ========================================= */
 
-  align-items: center;
-  justify-content: center;
+    .lock-indicator {
 
-  background:
-    rgba(0, 0, 0, 0.45);
+      position:
+        absolute;
 
-  border:
-    1px solid
-    rgba(181, 126, 220, 0.55);
+      bottom:
+        10px;
 
-  border-radius:
-    50%;
+      left:
+        10px;
 
-  opacity:
-    0;
+      z-index:
+        40;
 
-  transform:
-    scale(0.8);
+      width:
+        38px;
 
-  pointer-events:
-    none;
+      height:
+        38px;
 
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+      display:
+        flex;
 
-  box-shadow:
-    0 3px 10px
-    rgba(0, 0, 0, 0.35),
+      align-items:
+        center;
 
-    0 0 8px
-    rgba(181, 126, 220, 0.25);
+      justify-content:
+        center;
 
-  backdrop-filter:
-    blur(5px);
+      background:
+        rgba(0, 0, 0, 0.45);
 
-  cursor:
-    pointer;
+      border:
+        1px solid
+        rgba(181, 126, 220, 0.55);
 
-  user-select:
-    none;
+      border-radius:
+        50%;
 
-  /*
-    Evita el resaltado azul
-    de Chrome/Android.
-  */
+      opacity:
+        0;
 
-  -webkit-tap-highlight-color:
-    transparent;
+      transform:
+        scale(0.8);
 
-  /*
-    Evita gestos del navegador
-    mientras se mantiene pulsado.
-  */
+      pointer-events:
+        none;
 
-  touch-action:
-    none;
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
 
-}
+      box-shadow:
 
-/* =========================================
-   SVG DEL CANDADO
-========================================= */
+        0 3px 10px
+        rgba(0, 0, 0, 0.35),
 
-.lock-indicator svg {
+        0 0 8px
+        rgba(181, 126, 220, 0.25);
 
-  width:
-    24px;
+      backdrop-filter:
+        blur(5px);
 
-  height:
-    24px;
+      cursor:
+        pointer;
 
-  display:
-    block;
+      user-select:
+        none;
 
-  pointer-events:
-    none;
+      -webkit-tap-highlight-color:
+        transparent;
 
-}
+      touch-action:
+        none;
 
+    }
 
-/* =========================================
-   CANDADO VISIBLE
-========================================= */
 
-.lock-indicator.visible {
+    /* =========================================
+       SVG DEL CANDADO
+    ========================================= */
 
-  opacity:
-    1;
+    .lock-indicator svg {
 
-  transform:
-    scale(1);
+      width:
+        24px;
 
-  pointer-events:
-    auto;
+      height:
+        24px;
 
-}
+      display:
+        block;
 
+      pointer-events:
+        none;
 
-/* =========================================
-   ESTADO:
-   MANTENIENDO PRESIONADO
-========================================= */
+    }
 
-.lock-indicator.unlocking {
 
-  /*
-    El botón se mantiene ligeramente
-    iluminado durante los 2 segundos.
-  */
+    /* =========================================
+       CANDADO VISIBLE
+    ========================================= */
 
-  border-color:
-    rgba(181, 126, 220, 1);
+    .lock-indicator.visible {
 
-  background:
-    rgba(181, 126, 220, 0.25);
+      opacity:
+        1;
 
-  box-shadow:
+      transform:
+        scale(1);
 
-    0 3px 10px
-    rgba(0, 0, 0, 0.35),
+      pointer-events:
+        auto;
 
-    0 0 12px
-    rgba(181, 126, 220, 0.65);
+    }
 
-}
 
+    /* =========================================
+       ESTADO MANTENIENDO PRESIONADO
+    ========================================= */
 
-/* =========================================
-   ANIMACIÓN DEL SVG MIENTRAS SE PRESIONA
-========================================= */
+    .lock-indicator.unlocking {
 
-.lock-indicator.unlocking svg {
+      border-color:
+        rgba(181, 126, 220, 1);
 
-  animation:
-    lockPulse 2s linear forwards;
+      background:
+        rgba(181, 126, 220, 0.25);
 
-}
+      box-shadow:
 
+        0 3px 10px
+        rgba(0, 0, 0, 0.35),
 
-@keyframes lockPulse {
+        0 0 12px
+        rgba(181, 126, 220, 0.65);
 
-  0% {
+    }
 
-    transform:
-      scale(1);
 
-  }
+    /* =========================================
+       ANIMACIÓN DEL CANDADO
+    ========================================= */
 
-  50% {
+    .lock-indicator.unlocking svg {
 
-    transform:
-      scale(1.12);
+      animation:
+        lockPulse 2s linear forwards;
 
-  }
+    }
 
-  100% {
 
-    transform:
-      scale(1.18);
+    @keyframes lockPulse {
 
-  }
+      0% {
 
-}
+        transform:
+          scale(1);
 
-/* =========================================
-   SVG DEL CANDADO
-========================================= */
+      }
 
-.lock-indicator svg {
+      50% {
 
-  width:
-    24px;
+        transform:
+          scale(1.12);
 
-  height:
-    24px;
+      }
 
-  display:
-    block;
+      100% {
 
-}
+        transform:
+          scale(1.18);
 
+      }
 
-/* =========================================
-   CANDADO VISIBLE
-========================================= */
-
-.lock-indicator.visible {
-
-  opacity:
-    1;
-
-  transform:
-    scale(1);
-
-  pointer-events:
-    auto;
-
-}
+    }
 
 
     /* =========================================
@@ -725,15 +753,10 @@
       }
 
 
-      .overlay {
-
-        padding:
-          8px 10px 10px 10px;
-
-      }
-
-
       .bottom-bar {
+
+        bottom:
+          52px;
 
         padding:
           4px 10px;
@@ -748,6 +771,14 @@
 
       }
 
+
+      .controls-bar {
+
+        bottom:
+          8px;
+
+      }
+
     }
 
 
@@ -755,73 +786,97 @@
        PANTALLAS VERTICALES PEQUEÑAS
     ========================================= */
 
-@media
-(orientation: portrait)
-and (max-width: 380px) {
-
-  .bottom-bar {
-
-    gap:
-      5px;
-
-    padding:
-      4px 7px;
-
-  }
+    @media
+    (orientation: portrait)
+    and (max-width: 380px) {
 
 
-  .footer-text {
+      .bottom-bar {
 
-    font-size:
-      0.72rem;
+        bottom:
+          54px;
 
-  }
+        gap:
+          5px;
 
+        padding:
+          4px 7px;
 
-  .btn-icon {
-
-    width:
-      28px;
-
-    height:
-      28px;
-
-    font-size:
-      0.75rem;
-
-  }
+      }
 
 
-  .lock-indicator {
+      .projection-mode .bottom-bar {
 
-    width:
-      34px;
+        bottom:
+          8px;
 
-    height:
-      34px;
-
-    buttom:
-      10px;
-
-    left:
-      10px;
-    
-    top:
-      auto;
-  }
+      }
 
 
-  .lock-indicator svg {
+      .footer-text {
 
-    width:
-      21px;
+        font-size:
+          0.72rem;
 
-    height:
-      21px;
+      }
 
-  }
 
-}
+      .btn-icon {
+
+        width:
+          29px;
+
+        height:
+          29px;
+
+        font-size:
+          0.75rem;
+
+      }
+
+
+      .controls-bar {
+
+        bottom:
+          8px;
+
+        gap:
+          5px;
+
+      }
+
+
+      .lock-indicator {
+
+        width:
+          34px;
+
+        height:
+          34px;
+
+        bottom:
+          10px;
+
+        left:
+          10px;
+
+        top:
+          auto;
+
+      }
+
+
+      .lock-indicator svg {
+
+        width:
+          21px;
+
+        height:
+          21px;
+
+      }
+
+    }
 
   </style>
 
@@ -870,34 +925,36 @@ and (max-width: 380px) {
 
 
     <!-- =======================================
-         CANDADO DE BLOQUEO
+         CANDADO
          
-         Este elemento permanece visible
-         mientras los controles están bloqueados.
+         Siempre permanece independiente
+         de la barra inferior.
     ======================================== -->
 
-<div
-  class="lock-indicator"
-  id="lock-indicator"
-  title="Mantén presionado durante 2 segundos para desbloquear"
-  aria-label="Desbloquear controles"
->
+    <div
+      class="lock-indicator"
+      id="lock-indicator"
+      title="Mantén presionado durante 2 segundos para desbloquear"
+      aria-label="Desbloquear controles"
+    >
 
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="#B57EDC"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
-  </svg>
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="#B57EDC"
+        xmlns="http://www.w3.org/2000/svg"
+      >
 
-</div>
+        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+
+      </svg>
+
+    </div>
 
 
     <!-- =======================================
-         CAPA DE CONTROLES
+         CAPA DE INTERFAZ
     ======================================== -->
 
     <div
@@ -907,16 +964,19 @@ and (max-width: 380px) {
 
 
       <!-- =====================================
-           BARRA INFERIOR
+           BANNER BES0 O SHOT
+           
+           En modo normal:
+           encima de los controles.
+
+           En modo proyección:
+           baja hasta la parte inferior.
       ====================================== -->
 
       <div
         class="bottom-bar"
         id="bottom-bar"
       >
-
-
-        <!-- TEXTO -->
 
         <div
           class="footer-text"
@@ -940,66 +1000,79 @@ and (max-width: 380px) {
 
         </div>
 
-
-        <!-- SEPARADOR -->
-
-        <div
-          class="divider"
-        ></div>
+      </div>
 
 
-        <!-- CONTROLES -->
+      <!-- =====================================
+           BARRA DE CONTROLES
+           
+           Separada del banner.
+      ====================================== -->
 
-        <div
-          class="controls"
+      <div
+        class="controls-bar"
+        id="controls-bar"
+      >
+
+
+        <!-- CAMBIAR CÁMARA -->
+
+        <button
+          class="btn-icon"
+          id="switch-cam"
+          title="Cambiar Cámara"
+          aria-label="Cambiar Cámara"
+        >
+          🔄
+        </button>
+
+
+        <!-- PANTALLA COMPLETA -->
+
+        <button
+          class="btn-icon"
+          id="fullscreen"
+          title="Pantalla Completa"
+          aria-label="Pantalla Completa"
+        >
+          ⛶
+        </button>
+
+
+        <!-- MODO PROYECCIÓN -->
+
+        <button
+          class="btn-icon"
+          id="projection-mode"
+          title="Modo Proyección"
+          aria-label="Activar Modo Proyección"
+        >
+          📽️
+        </button>
+
+
+        <!-- BLOQUEAR CONTROLES -->
+
+        <button
+          class="btn-icon"
+          id="lock-controls"
+          title="Bloquear Controles"
+          aria-label="Bloquear Controles"
         >
 
-
-          <!-- CAMBIAR CÁMARA -->
-
-          <button
-            class="btn-icon"
-            id="switch-cam"
-            title="Cambiar Cámara"
-            aria-label="Cambiar Cámara"
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="#B57EDC"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            🔄
-          </button>
 
+            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5-2.28 0-4.27 1.54-4.84 3.75-.14.54.18 1.08.72 1.23.54.14 1.08-.18 1.22-.72C9.53 3.83 10.94 2.9 12 2.9c1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
 
-          <!-- PANTALLA COMPLETA -->
+          </svg>
 
-          <button
-            class="btn-icon"
-            id="fullscreen"
-            title="Pantalla Completa"
-            aria-label="Pantalla Completa"
-          >
-            ⛶
-          </button>
-
-
-          <!-- BLOQUEAR CONTROLES -->
-
-<button
-  class="btn-icon"
-  id="lock-controls"
-  title="Bloquear controles"
-  aria-label="Bloquear controles"
->
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="#B57EDC"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5-2.28 0-4.27 1.54-4.84 3.75-.14.54.18 1.08.72 1.23.54.14 1.08-.18 1.22-.72C9.53 3.83 10.94 2.9 12 2.9c1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-  </svg>
-</button>
-
-
-        </div>
+        </button>
 
 
       </div>
@@ -1022,6 +1095,12 @@ and (max-width: 380px) {
        ELEMENTOS DEL DOM
     ========================================= */
 
+    const app =
+      document.getElementById(
+        'app'
+      );
+
+
     const video =
       document.getElementById(
         'camera'
@@ -1040,9 +1119,21 @@ and (max-width: 380px) {
       );
 
 
+    const projectionBtn =
+      document.getElementById(
+        'projection-mode'
+      );
+
+
     const lockBtn =
       document.getElementById(
         'lock-controls'
+      );
+
+
+    const controlsBar =
+      document.getElementById(
+        'controls-bar'
       );
 
 
@@ -1103,10 +1194,14 @@ and (max-width: 380px) {
 
 
     /* =========================================
-       CONTROLES
+       ESTADO DE CONTROLES
     ========================================= */
 
     let controlsLocked =
+      false;
+
+
+    let projectionMode =
       false;
 
 
@@ -1114,19 +1209,12 @@ and (max-width: 380px) {
       null;
 
 
-    /*
-      Tiempo que permanecen visibles
-      los controles después de tocar.
-
-      5000 = 5 segundos.
-    */
-
     const CONTROL_TIMEOUT =
       5000;
 
 
     /* =========================================
-       TEMPORIZADOR PARA DESBLOQUEAR
+       TEMPORIZADOR DE DESBLOQUEO
     ========================================= */
 
     let unlockPressTimer =
@@ -1172,8 +1260,22 @@ and (max-width: 380px) {
 
 
       /*
+        En modo proyección
+        nunca mostramos controles.
+      */
+
+      if (
+        projectionMode
+      ) {
+
+        return;
+
+      }
+
+
+      /*
         Si están bloqueados,
-        no mostramos la barra.
+        tampoco mostramos controles.
       */
 
       if (
@@ -1185,30 +1287,15 @@ and (max-width: 380px) {
       }
 
 
-      /*
-        Mostrar barra.
-      */
-
-      bottomBar.classList.remove(
+      controlsBar.classList.remove(
         'hidden'
       );
 
-
-      /*
-        Cancelar temporizador anterior.
-      */
 
       clearTimeout(
         hideControlsTimer
       );
 
-
-      /*
-        Crear nuevo temporizador.
-
-        Después de 5 segundos
-        la barra desaparece.
-      */
 
       hideControlsTimer =
         setTimeout(
@@ -1226,25 +1313,7 @@ and (max-width: 380px) {
     function hideControls() {
 
 
-      /*
-        Si están bloqueados,
-        mantenemos la barra oculta.
-      */
-
-      if (
-        controlsLocked
-      ) {
-
-        bottomBar.classList.add(
-          'hidden'
-        );
-
-        return;
-
-      }
-
-
-      bottomBar.classList.add(
+      controlsBar.classList.add(
         'hidden'
       );
 
@@ -1252,18 +1321,28 @@ and (max-width: 380px) {
 
 
     /* =========================================
-       BLOQUEAR CONTROLES
+       ACTIVAR MODO PROYECCIÓN
     ========================================= */
 
-    function lockControls() {
+    function activateProjectionMode() {
+
+
+      projectionMode =
+        true;
 
 
       /*
-        Activar estado bloqueado.
-      */
+        Agregar clase al contenedor.
 
-      controlsLocked =
-        true;
+        CSS automáticamente:
+
+        - Baja el banner.
+        - Oculta controles.
+    */
+
+      app.classList.add(
+        'projection-mode'
+      );
 
 
       /*
@@ -1276,38 +1355,58 @@ and (max-width: 380px) {
 
 
       /*
-        Ocultar barra.
+        Ocultar controles.
       */
 
-      bottomBar.classList.add(
+      controlsBar.classList.add(
         'hidden'
       );
 
 
       /*
-        Mostrar candado independiente.
+        Mostrar candado.
+
+        El candado permite volver
+        a controlar la aplicación.
       */
 
       lockIndicator.classList.add(
         'visible'
       );
 
+
+      /*
+        Marcar el estado como bloqueado.
+      */
+
+      controlsLocked =
+        true;
+
     }
 
 
     /* =========================================
-       DESBLOQUEAR CONTROLES
+       DESACTIVAR MODO PROYECCIÓN
     ========================================= */
 
-    function unlockControls() {
+    function deactivateProjectionMode() {
 
 
-      /*
-        Desactivar bloqueo.
-      */
+      projectionMode =
+        false;
+
 
       controlsLocked =
         false;
+
+
+      /*
+        Quitar clase de proyección.
+      */
+
+      app.classList.remove(
+        'projection-mode'
+      );
 
 
       /*
@@ -1320,10 +1419,7 @@ and (max-width: 380px) {
 
 
       /*
-        Mostrar controles.
-
-        El temporizador de 5 segundos
-        comenzará nuevamente.
+        Mostrar controles nuevamente.
       */
 
       showControls();
@@ -1332,24 +1428,19 @@ and (max-width: 380px) {
 
 
     /* =========================================
-       BOTÓN PARA BLOQUEAR
+       BOTÓN MODO PROYECCIÓN
     ========================================= */
 
-    lockBtn.addEventListener(
+    projectionBtn.addEventListener(
       'click',
       () => {
 
 
-        /*
-          Si no está bloqueado,
-          bloquear.
-        */
-
         if (
-          !controlsLocked
+          !projectionMode
         ) {
 
-          lockControls();
+          activateProjectionMode();
 
         }
 
@@ -1358,157 +1449,217 @@ and (max-width: 380px) {
 
 
     /* =========================================
-       CANDADO:
-       MANTENER PRESIONADO PARA DESBLOQUEAR
+       BLOQUEAR CONTROLES
     ========================================= */
 
-lockIndicator.addEventListener(
-  'pointerdown',
-  (e) => {
+    lockBtn.addEventListener(
+      'click',
+      () => {
 
-    e.preventDefault();
-
-    e.stopPropagation();
-
-
-    /*
-      Activar estado visual
-      de "manteniendo presionado".
-    */
-
-    lockIndicator.classList.add(
-      'unlocking'
-    );
-
-
-    /*
-      Mantener el control del dedo
-      aunque se mueva ligeramente.
-    */
-
-    if (
-      lockIndicator.setPointerCapture
-    ) {
-
-      lockIndicator.setPointerCapture(
-        e.pointerId
-      );
-
-    }
-
-
-    /*
-      Iniciar temporizador
-      de 2 segundos.
-    */
-
-    unlockPressTimer =
-      setTimeout(
-        () => {
-
-          /*
-            Quitar estado visual.
-          */
-
-          lockIndicator.classList.remove(
-            'unlocking'
-          );
-
-
-          /*
-            Desbloquear.
-          */
-
-          unlockControls();
-
-        },
-        2000
-      );
-
-  }
-);
-
-
-    /* =========================================
-       SOLTAR CANDADO
-    ========================================= */
-
-lockIndicator.addEventListener(
-  'pointerup',
-  (e) => {
-
-    e.preventDefault();
-
-    e.stopPropagation();
-
-
-    /*
-      Cancelar temporizador
-      si soltamos antes de 2 segundos.
-    */
-
-    clearTimeout(
-      unlockPressTimer
-    );
-
-
-    /*
-      Quitar efecto visual.
-    */
-
-    lockIndicator.classList.remove(
-      'unlocking'
-    );
-
-
-    /*
-      Liberar captura del puntero.
-    */
-
-    if (
-      lockIndicator.releasePointerCapture
-    ) {
-
-      try {
-
-        lockIndicator.releasePointerCapture(
-          e.pointerId
-        );
-
-      } catch (err) {
 
         /*
-          Ignorar errores de captura
-          si el puntero ya fue liberado.
+          Si ya estamos en modo proyección,
+          no hacer nada.
         */
 
+        if (
+          projectionMode
+        ) {
+
+          return;
+
+        }
+
+
+        /*
+          Activar bloqueo normal.
+        */
+
+        controlsLocked =
+          true;
+
+
+        /*
+          Ocultar controles.
+        */
+
+        hideControls();
+
+
+        /*
+          Mostrar candado.
+        */
+
+        lockIndicator.classList.add(
+          'visible'
+        );
+
       }
-
-    }
-
-  }
-);
+    );
 
 
     /* =========================================
-       CANCELAR DESBLOQUEO
+       CANDADO:
+       INICIAR DESBLOQUEO
     ========================================= */
 
+    lockIndicator.addEventListener(
+      'pointerdown',
+      (e) => {
 
-lockIndicator.addEventListener(
-  'pointercancel',
-  () => {
 
-    clearTimeout(
-      unlockPressTimer
+        e.preventDefault();
+
+        e.stopPropagation();
+
+
+        /*
+          Agregar estado visual.
+
+          El candado comienza
+          su animación de 2 segundos.
+        */
+
+        lockIndicator.classList.add(
+          'unlocking'
+        );
+
+
+        /*
+          Iniciar temporizador.
+        */
+
+        unlockPressTimer =
+          setTimeout(
+            () => {
+
+
+              /*
+                Quitar animación.
+              */
+
+              lockIndicator.classList.remove(
+                'unlocking'
+              );
+
+
+              /*
+                Si estábamos en modo proyección,
+                salir de él.
+              */
+
+              if (
+                projectionMode
+              ) {
+
+                deactivateProjectionMode();
+
+              }
+
+
+              /*
+                Si era un bloqueo normal,
+                desbloquear.
+              */
+
+              else {
+
+                controlsLocked =
+                  false;
+
+
+                lockIndicator.classList.remove(
+                  'visible'
+                );
+
+
+                showControls();
+
+              }
+
+            },
+            2000
+          );
+
+      }
     );
 
-    lockIndicator.classList.remove(
-      'unlocking'
+
+    /* =========================================
+       CANDADO:
+       SOLTAR ANTES DE TIEMPO
+    ========================================= */
+
+    lockIndicator.addEventListener(
+      'pointerup',
+      (e) => {
+
+
+        e.preventDefault();
+
+        e.stopPropagation();
+
+
+        /*
+          Cancelar desbloqueo.
+        */
+
+        clearTimeout(
+          unlockPressTimer
+        );
+
+
+        /*
+          Quitar estado visual.
+        */
+
+        lockIndicator.classList.remove(
+          'unlocking'
+        );
+
+      }
     );
 
-  }
-);
+
+    /* =========================================
+       CANDADO:
+       CANCELAR
+    ========================================= */
+
+    lockIndicator.addEventListener(
+      'pointercancel',
+      () => {
+
+
+        clearTimeout(
+          unlockPressTimer
+        );
+
+
+        lockIndicator.classList.remove(
+          'unlocking'
+        );
+
+      }
+    );
+
+
+    lockIndicator.addEventListener(
+      'pointerleave',
+      () => {
+
+
+        clearTimeout(
+          unlockPressTimer
+        );
+
+
+        lockIndicator.classList.remove(
+          'unlocking'
+        );
+
+      }
+    );
 
 
     /* =========================================
@@ -1521,11 +1672,26 @@ lockIndicator.addEventListener(
 
 
         /*
+          Si estamos en modo proyección,
+          no mostrar controles.
+
+          La única forma de salir
+          es mantener presionado
+          el candado.
+        */
+
+        if (
+          projectionMode
+        ) {
+
+          return;
+
+        }
+
+
+        /*
           Si se tocó un botón,
           ignorar.
-
-          Los botones tienen
-          sus propios eventos.
         */
 
         if (
@@ -1542,9 +1708,6 @@ lockIndicator.addEventListener(
         /*
           Si se tocó el candado,
           ignorar.
-
-          El candado tiene su propio
-          sistema de desbloqueo.
         */
 
         if (
@@ -1559,7 +1722,7 @@ lockIndicator.addEventListener(
 
 
         /*
-          Si está bloqueado,
+          Si están bloqueados,
           no mostrar controles.
         */
 
@@ -1663,7 +1826,7 @@ lockIndicator.addEventListener(
 
 
         /*
-          Obtener pista de video.
+          Obtener pista.
         */
 
         videoTrack =
@@ -1702,10 +1865,6 @@ lockIndicator.addEventListener(
             currentZoom =
               minZoom;
 
-
-            /*
-              Aplicar zoom mínimo.
-            */
 
             await videoTrack
               .applyConstraints({
@@ -1746,7 +1905,8 @@ lockIndicator.addEventListener(
 
 
         /*
-          Mostrar controles al iniciar.
+          Mostrar controles
+          al iniciar.
         */
 
         showControls();
@@ -1856,10 +2016,6 @@ lockIndicator.addEventListener(
               );
 
 
-            /*
-              Sensibilidad del zoom.
-            */
-
             const diff =
 
               (
@@ -1867,11 +2023,6 @@ lockIndicator.addEventListener(
                 initialPinchDistance
               ) * 0.01;
 
-
-            /*
-              Limitar zoom
-              al rango soportado.
-            */
 
             const newZoom =
 
@@ -1969,11 +2120,6 @@ lockIndicator.addEventListener(
       () => {
 
 
-        /*
-          Alternar entre cámara frontal
-          y cámara trasera.
-        */
-
         facingMode =
 
           facingMode === "user"
@@ -1982,10 +2128,6 @@ lockIndicator.addEventListener(
 
             : "user";
 
-
-        /*
-          Reiniciar cámara.
-        */
 
         startCamera();
 
@@ -2008,10 +2150,6 @@ lockIndicator.addEventListener(
           );
 
 
-        /*
-          Entrar en pantalla completa.
-        */
-
         if (
           !document.fullscreenElement
         ) {
@@ -2031,11 +2169,6 @@ lockIndicator.addEventListener(
 
 
         }
-
-
-        /*
-          Salir de pantalla completa.
-        */
 
         else {
 
