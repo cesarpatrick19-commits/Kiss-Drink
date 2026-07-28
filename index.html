@@ -43,6 +43,11 @@
         Verdana,
         sans-serif;
 
+      /*
+        Permite controlar mejor
+        los gestos táctiles.
+      */
+
       touch-action: manipulation;
 
     }
@@ -92,8 +97,8 @@
     /* =========================================
        MARCO DECORATIVO
        
-       El banner KISS CAM ya está incluido
-       dentro de las imágenes PNG.
+       El texto KISS CAM ya está incluido
+       dentro del PNG.
     ========================================= */
 
     .frame-overlay {
@@ -135,6 +140,11 @@
 
       display: block;
 
+      /*
+        El PNG ocupa exactamente
+        toda la pantalla.
+      */
+
       object-fit: fill;
 
       pointer-events: none;
@@ -143,7 +153,7 @@
 
 
     /* =========================================
-       CAPA DE CONTROLES
+       CAPA DE INTERFAZ
     ========================================= */
 
     .overlay {
@@ -160,36 +170,30 @@
 
       pointer-events: none;
 
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: flex-end;
-
-      align-items: center;
-
-      /*
-        Espacio inferior para el banner
-        cuando los controles están visibles.
-      */
-
-      padding:
-        10px;
-
       z-index: 20;
 
     }
 
 
     /* =========================================
-       BARRA INFERIOR
+       BANNER INFERIOR
        
-       Estado normal:
-       se encuentra un poco elevada
-       para dejar espacio a los botones.
+       "Beso o Shot"
+       
+       Este elemento permanece fijo
+       y separado de los botones.
     ========================================= */
 
     .bottom-bar {
+
+      position: absolute;
+
+      left: 50%;
+
+      bottom: 10px;
+
+      transform:
+        translateX(-50%);
 
       pointer-events: auto;
 
@@ -197,13 +201,15 @@
 
       align-items: center;
 
-      gap: 7px;
+      justify-content: center;
+
+      gap: 6px;
 
       background:
         rgba(0, 0, 0, 0.65);
 
       padding:
-        5px 9px;
+        5px 10px;
 
       border-radius:
         30px;
@@ -219,76 +225,24 @@
         0 4px 12px
         rgba(0, 0, 0, 0.3);
 
-      max-width:
-        calc(100vw - 20px);
-
-      flex-shrink:
-        0;
+      white-space:
+        nowrap;
 
       /*
-        Estado inicial visible.
+        El banner permanece siempre visible.
       */
 
       opacity:
         1;
 
-      transform:
-        translateY(0);
-
       transition:
-
-        opacity 0.35s ease,
-
-        transform 0.35s ease;
+        opacity 0.3s ease;
 
     }
 
 
     /* =========================================
-       CONTROLES OCULTOS
-       
-       El banner desaparece visualmente
-       de la zona elevada y baja hacia
-       el borde inferior.
-    ========================================= */
-
-    .bottom-bar.hidden {
-
-      opacity:
-        1;
-
-      transform:
-        translateY(45px);
-
-      pointer-events:
-        none;
-
-    }
-
-
-    /* =========================================
-       MODO PROYECCIÓN
-       
-       El banner se mantiene abajo
-       y los controles desaparecen.
-    ========================================= */
-
-    .bottom-bar.projection-mode {
-
-      opacity:
-        1;
-
-      transform:
-        translateY(45px);
-
-      pointer-events:
-        none;
-
-    }
-
-
-    /* =========================================
-       TEXTO DE LA BARRA
+       TEXTO DEL BANNER
     ========================================= */
 
     .footer-text {
@@ -305,6 +259,9 @@
       align-items:
         center;
 
+      justify-content:
+        center;
+
       gap:
         4px;
 
@@ -314,9 +271,6 @@
       white-space:
         nowrap;
 
-      flex-shrink:
-        0;
-
       line-height:
         1;
 
@@ -325,12 +279,9 @@
 
     /* =========================================
        ICONO DE BESO
-       
-       Puedes cambiar este emoji
-       por otro icono si quieres.
     ========================================= */
 
-    .kiss-icon {
+    .kiss {
 
       font-size:
         1rem;
@@ -392,55 +343,119 @@
 
 
     /* =========================================
-       SEPARADOR
-    ========================================= */
-
-    .divider {
-
-      width:
-        1px;
-
-      height:
-        20px;
-
-      background:
-        rgba(255, 255, 255, 0.3);
-
-      flex-shrink:
-        0;
-
-    }
-
-
-    /* =========================================
-       CONTROLES
+       GRUPO DE BOTONES
+       
+       Se ubica en el costado
+       inferior derecho.
     ========================================= */
 
     .controls {
 
-      display:
-        flex;
+      position: absolute;
 
-      align-items:
-        center;
+      right: 10px;
 
-      gap:
-        5px;
+      bottom: 10px;
 
-      flex-shrink:
-        0;
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 6px;
+
+      pointer-events: auto;
 
     }
 
 
     /* =========================================
-       BOTONES
+       BOTONES SECUNDARIOS
+       
+       Cambio de cámara
+       Pantalla completa
+    ========================================= */
+
+    .secondary-controls {
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 6px;
+
+      /*
+        Visibles en modo desbloqueado.
+      */
+
+      opacity:
+        1;
+
+      transform:
+        translateY(0);
+
+      pointer-events:
+        auto;
+
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+
+    }
+
+
+    /* =========================================
+       MODO PROYECCIÓN
+       
+       Los botones secundarios desaparecen.
+    ========================================= */
+
+    .container.projecting
+    .secondary-controls {
+
+      opacity:
+        0;
+
+      transform:
+        translateY(10px);
+
+      pointer-events:
+        none;
+
+    }
+
+
+    /* =========================================
+       BOTÓN DE PROYECCIÓN
+       
+       Siempre permanece visible.
+    ========================================= */
+
+    #projection {
+
+      width:
+        34px;
+
+      height:
+        34px;
+
+      font-size:
+        0.95rem;
+
+    }
+
+
+    /* =========================================
+       BOTONES GENERALES
     ========================================= */
 
     .btn-icon {
 
       background:
-        rgba(255, 255, 255, 0.15);
+        rgba(0, 0, 0, 0.55);
 
       color:
         white;
@@ -450,10 +465,10 @@
         rgba(255, 255, 255, 0.4);
 
       width:
-        30px;
+        32px;
 
       height:
-        30px;
+        32px;
 
       border-radius:
         50%;
@@ -462,7 +477,7 @@
         pointer;
 
       font-size:
-        0.8rem;
+        0.85rem;
 
       display:
         flex;
@@ -475,7 +490,8 @@
 
       transition:
         background 0.2s,
-        transform 0.1s;
+        transform 0.1s,
+        box-shadow 0.2s;
 
       flex-shrink:
         0;
@@ -492,13 +508,17 @@
     }
 
 
+    /* =========================================
+       EFECTO AL PRESIONAR
+    ========================================= */
+
     .btn-icon:active {
 
       transform:
         scale(0.9);
 
       background:
-        rgba(255, 255, 255, 0.4);
+        rgba(255, 255, 255, 0.3);
 
     }
 
@@ -506,203 +526,55 @@
     /* =========================================
        BOTÓN DE PROYECCIÓN
        
-       Este botón reemplaza al candado.
-
-       Se mantiene pequeño y discreto.
+       Color lila para diferenciarlo.
     ========================================= */
 
-    .projection-button {
+    #projection {
 
-      position: fixed;
-
-      right:
-        12px;
-
-      bottom:
-        12px;
-
-      z-index:
-        50;
-
-      width:
-        28px;
-
-      height:
-        28px;
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
-
-      background:
-        rgba(0, 0, 0, 0.45);
-
-      border:
-        1px solid
-        rgba(181, 126, 220, 0.65);
-
-      border-radius:
-        50%;
-
-      color:
-        white;
-
-      cursor:
-        pointer;
-
-      opacity:
-        1;
-
-      transition:
-
-        opacity 0.3s ease,
-
-        transform 0.2s ease,
-
-        background 0.2s ease;
+      border-color:
+        rgba(181, 126, 220, 0.7);
 
       box-shadow:
-
-        0 3px 10px
-        rgba(0, 0, 0, 0.35),
-
         0 0 8px
         rgba(181, 126, 220, 0.25);
 
-      backdrop-filter:
-        blur(5px);
-
-      -webkit-tap-highlight-color:
-        transparent;
-
-      user-select:
-        none;
-
-      touch-action:
-        manipulation;
-
     }
 
 
-    .projection-button svg {
+    /* =========================================
+       INDICADOR VISUAL:
+       MODO PROYECCIÓN ACTIVO
+    ========================================= */
 
-      width:
-        16px;
-
-      height:
-        16px;
-
-      display:
-        block;
-
-      pointer-events:
-        none;
-
-    }
-
-
-    .projection-button:active {
-
-      transform:
-        scale(0.88);
+    .container.projecting
+    #projection {
 
       background:
         rgba(181, 126, 220, 0.35);
 
-    }
+      border-color:
+        rgba(181, 126, 220, 1);
 
-
-    /* =========================================
-       BOTÓN DE PROYECCIÓN OCULTO
-       
-       En modo proyección también se oculta
-       para dejar la pantalla limpia.
-    ========================================= */
-
-    .projection-button.hidden {
-
-      opacity:
-        0;
-
-      pointer-events:
-        none;
-
-      transform:
-        scale(0.8);
+      box-shadow:
+        0 0 10px
+        rgba(181, 126, 220, 0.65);
 
     }
 
 
     /* =========================================
-       PANTALLAS VERTICALES PEQUEÑAS
+       ORIENTACIÓN VERTICAL
     ========================================= */
 
     @media
-    (orientation: portrait)
-    and (max-width: 380px) {
+    (orientation: portrait) {
 
-      .bottom-bar {
+      .frame-overlay img {
 
-        gap:
-          5px;
-
-        padding:
-          4px 7px;
-
-      }
-
-
-      .footer-text {
-
-        font-size:
-          0.72rem;
-
-      }
-
-
-      .btn-icon {
-
-        width:
-          28px;
-
-        height:
-          28px;
-
-        font-size:
-          0.75rem;
-
-      }
-
-
-      .projection-button {
-
-        width:
-          26px;
-
-        height:
-          26px;
-
-        right:
-          10px;
-
-        bottom:
-          10px;
-
-      }
-
-
-      .projection-button svg {
-
-        width:
-          15px;
-
-        height:
-          15px;
+        content:
+          url(
+            "assets/frames/marco-kisscam-vertical.png"
+          );
 
       }
 
@@ -726,15 +598,10 @@
       }
 
 
-      .overlay {
-
-        padding:
-          8px 10px 10px 10px;
-
-      }
-
-
       .bottom-bar {
+
+        bottom:
+          10px;
 
         padding:
           4px 10px;
@@ -749,24 +616,139 @@
 
       }
 
+
+      .controls {
+
+        right:
+          10px;
+
+        bottom:
+          10px;
+
+      }
+
     }
 
 
     /* =========================================
-       ORIENTACIÓN VERTICAL
+       PANTALLAS VERTICALES PEQUEÑAS
     ========================================= */
 
     @media
-    (orientation: portrait) {
+    (orientation: portrait)
+    and (max-width: 380px) {
 
-      .frame-overlay img {
 
-        content:
-          url(
-            "assets/frames/marco-kisscam-vertical.png"
-          );
+      .bottom-bar {
+
+        padding:
+          4px 8px;
 
       }
+
+
+      .footer-text {
+
+        font-size:
+          0.72rem;
+
+      }
+
+
+      .controls {
+
+        right:
+          8px;
+
+        bottom:
+          8px;
+
+        gap:
+          5px;
+
+      }
+
+
+      .secondary-controls {
+
+        gap:
+          5px;
+
+      }
+
+
+      .btn-icon {
+
+        width:
+          29px;
+
+        height:
+          29px;
+
+        font-size:
+          0.75rem;
+
+      }
+
+
+      #projection {
+
+        width:
+          32px;
+
+        height:
+          32px;
+
+        font-size:
+          0.85rem;
+
+      }
+
+    }
+
+
+    /* =========================================
+       MODO PROYECCIÓN:
+       BANNER INFERIOR UN POCO MÁS ABAJO
+       
+       El banner ya está en posición inferior,
+       por lo que se mantiene fijo.
+    ========================================= */
+
+    .container.projecting
+    .bottom-bar {
+
+      bottom:
+        10px;
+
+    }
+
+
+    /* =========================================
+       MODO PANTALLA COMPLETA
+    ========================================= */
+
+    :fullscreen {
+
+      width:
+        100vw;
+
+      height:
+        100dvh;
+
+      background:
+        #000;
+
+    }
+
+
+    :fullscreen .container {
+
+      width:
+        100vw;
+
+      height:
+        100dvh;
 
     }
 
@@ -802,12 +784,9 @@
 
     <!-- =======================================
          MARCO DECORATIVO
-
-         IMPORTANTE:
-         El banner KISS CAM ya está dentro
-         del PNG del marco.
-
-         NO agregamos otro banner HTML.
+         
+         KISS CAM ya viene incluido
+         dentro de los archivos PNG.
     ======================================== -->
 
     <picture
@@ -823,7 +802,7 @@
 
 
     <!-- =======================================
-         CAPA DE CONTROLES
+         CAPA DE INTERFAZ
     ======================================== -->
 
     <div
@@ -833,7 +812,12 @@
 
 
       <!-- =====================================
-           BARRA INFERIOR
+           BANNER:
+
+           💋 ¡Beso o Shot! 🍻
+
+           Siempre visible.
+           Independiente de los botones.
       ====================================== -->
 
       <div
@@ -841,33 +825,19 @@
         id="bottom-bar"
       >
 
-
-        <!-- ===================================
-             TEXTO
-        ==================================== -->
-
         <div
           class="footer-text"
         >
 
-
-          <!-- ICONO DE BESO -->
-
           <span
-            class="kiss-icon"
+            class="kiss"
           >
             💋
           </span>
 
-
-          <!-- TEXTO -->
-
           <span>
             ¡Beso o Shot!
           </span>
-
-
-          <!-- ICONO DE CERVEZA -->
 
           <span
             class="glass"
@@ -875,25 +845,34 @@
             🍻
           </span>
 
-
         </div>
 
+      </div>
 
-        <!-- ===================================
-             SEPARADOR
-        ==================================== -->
+
+      <!-- =====================================
+           CONTROLES LATERALES
+
+           Se encuentran en la esquina
+           inferior derecha.
+      ====================================== -->
+
+      <div
+        class="controls"
+        id="controls"
+      >
+
+
+        <!-- =================================
+             BOTONES SECUNDARIOS
+
+             Solo aparecen en modo
+             desbloqueado.
+        ================================== -->
 
         <div
-          class="divider"
-        ></div>
-
-
-        <!-- ===================================
-             CONTROLES
-        ==================================== -->
-
-        <div
-          class="controls"
+          class="secondary-controls"
+          id="secondary-controls"
         >
 
 
@@ -905,7 +884,9 @@
             title="Cambiar Cámara"
             aria-label="Cambiar Cámara"
           >
+
             🔄
+
           </button>
 
 
@@ -917,51 +898,41 @@
             title="Pantalla Completa"
             aria-label="Pantalla Completa"
           >
+
             ⛶
+
           </button>
 
 
         </div>
 
 
+        <!-- =================================
+             BOTÓN DE PROYECCIÓN
+
+             Este botón funciona como
+             interruptor entre:
+
+             MODO DESBLOQUEADO
+             MODO PROYECCIÓN
+        ================================== -->
+
+        <button
+          class="btn-icon"
+          id="projection"
+          title="Activar modo proyección"
+          aria-label="Activar modo proyección"
+        >
+
+          📺
+
+        </button>
+
+
       </div>
 
 
     </div>
-
-
-    <!-- =======================================
-         BOTÓN DE PROYECCIÓN
-
-         Reemplaza al candado.
-
-         Está fuera del banner inferior
-         y se ubica en la esquina inferior
-         derecha.
-    ======================================== -->
-
-    <button
-      class="projection-button"
-      id="projection-button"
-      title="Modo Proyección"
-      aria-label="Activar modo proyección"
-    >
-
-      <!-- Icono de pantalla -->
-
-      <svg
-        viewBox="0 0 24 24"
-        fill="#B57EDC"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-
-        <path
-          d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"
-        />
-
-      </svg>
-
-    </button>
 
 
   </div>
@@ -977,6 +948,12 @@
     /* =========================================
        ELEMENTOS DEL DOM
     ========================================= */
+
+    const app =
+      document.getElementById(
+        'app'
+      );
+
 
     const video =
       document.getElementById(
@@ -998,13 +975,7 @@
 
     const projectionBtn =
       document.getElementById(
-        'projection-button'
-      );
-
-
-    const bottomBar =
-      document.getElementById(
-        'bottom-bar'
+        'projection'
       );
 
 
@@ -1053,32 +1024,10 @@
 
 
     /* =========================================
-       CONTROLES
+       ESTADO DEL MODO PROYECCIÓN
     ========================================= */
 
-    let hideControlsTimer =
-      null;
-
-
-    /*
-      Tiempo visible de los controles.
-
-      5000 = 5 segundos.
-    */
-
-    const CONTROL_TIMEOUT =
-      5000;
-
-
-    /*
-      Estado del modo proyección.
-
-      false = modo teléfono.
-
-      true = modo proyección.
-    */
-
-    let projectionMode =
+    let isProjecting =
       false;
 
 
@@ -1088,128 +1037,40 @@
 
     async function requestWakeLock() {
 
+
       try {
+
 
         if (
           'wakeLock' in navigator
         ) {
+
 
           wakeLock =
             await navigator.wakeLock.request(
               'screen'
             );
 
+
+          console.log(
+            'Wake Lock activado'
+          );
+
+
         }
 
+
       } catch (err) {
+
 
         console.log(
           "WakeLock:",
           err.message
         );
 
-      }
-
-    }
-
-
-    /* =========================================
-       MOSTRAR CONTROLES
-    ========================================= */
-
-    function showControls() {
-
-
-      /*
-        Si estamos en modo proyección,
-        no mostramos controles.
-      */
-
-      if (
-        projectionMode
-      ) {
-
-        return;
 
       }
 
-
-      /*
-        Mostrar banner en posición elevada.
-      */
-
-      bottomBar.classList.remove(
-        'hidden'
-      );
-
-
-      bottomBar.classList.remove(
-        'projection-mode'
-      );
-
-
-      /*
-        Mostrar botón de proyección.
-      */
-
-      projectionBtn.classList.remove(
-        'hidden'
-      );
-
-
-      /*
-        Cancelar temporizador anterior.
-      */
-
-      clearTimeout(
-        hideControlsTimer
-      );
-
-
-      /*
-        Crear nuevo temporizador.
-
-        Después de 5 segundos:
-
-        - desaparecen botones
-        - el banner baja
-        - aparece solamente el botón
-          de proyección.
-      */
-
-      hideControlsTimer =
-        setTimeout(
-          hideControls,
-          CONTROL_TIMEOUT
-        );
-
-    }
-
-
-    /* =========================================
-       OCULTAR CONTROLES
-    ========================================= */
-
-    function hideControls() {
-
-
-      /*
-        El banner baja.
-      */
-
-      bottomBar.classList.add(
-        'hidden'
-      );
-
-
-      /*
-        Mantener visible el botón
-        de proyección.
-      */
-
-      projectionBtn.classList.remove(
-        'hidden'
-      );
 
     }
 
@@ -1225,43 +1086,31 @@
         Activar estado.
       */
 
-      projectionMode =
+      isProjecting =
         true;
 
 
       /*
-        Cancelar temporizador.
+        Agregar clase al contenedor.
+
+        CSS se encarga de ocultar:
+
+        🔄 Cambiar cámara
+        ⛶ Pantalla completa
       */
 
-      clearTimeout(
-        hideControlsTimer
+      app.classList.add(
+        'projecting'
       );
 
 
       /*
-        Bajar banner.
+        Actualizar texto de ayuda.
       */
 
-      bottomBar.classList.add(
-        'projection-mode'
-      );
+      projectionBtn.title =
+        "Salir del modo proyección";
 
-
-      /*
-        Mantener botón de proyección
-        visible para poder volver
-        al modo teléfono.
-      */
-
-      projectionBtn.classList.remove(
-        'hidden'
-      );
-
-
-      /*
-        Actualizar información
-        de accesibilidad.
-      */
 
       projectionBtn.setAttribute(
         'aria-label',
@@ -1269,10 +1118,12 @@
       );
 
 
-      projectionBtn.setAttribute(
-        'title',
-        'Salir del modo proyección'
-      );
+      /*
+        Mantener pantalla encendida.
+      */
+
+      requestWakeLock();
+
 
     }
 
@@ -1288,14 +1139,26 @@
         Desactivar estado.
       */
 
-      projectionMode =
+      isProjecting =
         false;
 
 
       /*
-        Actualizar información
-        del botón.
+        Quitar clase.
       */
+
+      app.classList.remove(
+        'projecting'
+      );
+
+
+      /*
+        Restaurar texto de ayuda.
+      */
+
+      projectionBtn.title =
+        "Activar modo proyección";
+
 
       projectionBtn.setAttribute(
         'aria-label',
@@ -1303,103 +1166,58 @@
       );
 
 
-      projectionBtn.setAttribute(
-        'title',
-        'Modo Proyección'
-      );
+    }
 
 
-      /*
-        Mostrar controles.
-      */
+    /* =========================================
+       ALTERNAR MODO PROYECCIÓN
+    ========================================= */
 
-      showControls();
+    function toggleProjectionMode() {
+
+
+      if (
+        isProjecting
+      ) {
+
+
+        /*
+          Actualmente proyectando.
+
+          Volver al modo normal.
+        */
+
+        disableProjectionMode();
+
+
+      } else {
+
+
+        /*
+          Actualmente desbloqueado.
+
+          Activar proyección.
+        */
+
+        enableProjectionMode();
+
+
+      }
 
     }
 
 
     /* =========================================
-       BOTÓN DE PROYECCIÓN
+       BOTÓN PROYECTAR
     ========================================= */
 
     projectionBtn.addEventListener(
       'click',
-      (e) => {
+      () => {
 
 
-        /*
-          Evitar propagación
-          del evento.
-        */
+        toggleProjectionMode();
 
-        e.stopPropagation();
-
-
-        /*
-          Cambiar entre modos.
-        */
-
-        if (
-          projectionMode
-        ) {
-
-          disableProjectionMode();
-
-        } else {
-
-          enableProjectionMode();
-
-        }
-
-      }
-    );
-
-
-    /* =========================================
-       TOCAR LA PANTALLA
-    ========================================= */
-
-    document.addEventListener(
-      'pointerdown',
-      (e) => {
-
-
-        /*
-          Ignorar botones.
-        */
-
-        if (
-          e.target.closest(
-            'button'
-          )
-        ) {
-
-          return;
-
-        }
-
-
-        /*
-          Si estamos en modo proyección,
-          la pantalla permanece limpia.
-
-          No mostramos controles.
-        */
-
-        if (
-          projectionMode
-        ) {
-
-          return;
-
-        }
-
-
-        /*
-          Mostrar controles.
-        */
-
-        showControls();
 
       }
     );
@@ -1420,12 +1238,14 @@
         currentStream
       ) {
 
+
         currentStream
           .getTracks()
           .forEach(
             track =>
               track.stop()
           );
+
 
       }
 
@@ -1486,7 +1306,7 @@
 
 
         /*
-          Obtener pista.
+          Obtener pista de video.
         */
 
         videoTrack =
@@ -1548,15 +1368,19 @@
               .catch(
                 e => {
 
+
                   console.log(
                     "Error aplicando zoom inicial:",
                     e
                   );
 
+
                 }
               );
 
+
           }
+
 
         }
 
@@ -1566,14 +1390,6 @@
         */
 
         requestWakeLock();
-
-
-        /*
-          Mostrar controles
-          al iniciar.
-        */
-
-        showControls();
 
 
       } catch (err) {
@@ -1586,6 +1402,7 @@
 
 
       }
+
 
     }
 
@@ -1614,6 +1431,7 @@
         dy
       );
 
+
     }
 
 
@@ -1638,6 +1456,7 @@
 
 
         }
+
 
       }
     );
@@ -1681,7 +1500,7 @@
 
 
             /*
-              Sensibilidad.
+              Sensibilidad del zoom.
             */
 
             const diff =
@@ -1693,7 +1512,8 @@
 
 
             /*
-              Limitar zoom.
+              Limitar zoom
+              al rango soportado.
             */
 
             const newZoom =
@@ -1753,9 +1573,12 @@
 
             }
 
+
           }
 
+
         }
+
 
       }
     );
@@ -1774,10 +1597,13 @@
           e.touches.length < 2
         ) {
 
+
           initialPinchDistance =
             null;
 
+
         }
+
 
       }
     );
@@ -1793,7 +1619,8 @@
 
 
         /*
-          Alternar cámara.
+          Alternar entre cámara frontal
+          y cámara trasera.
         */
 
         facingMode =
@@ -1812,12 +1639,6 @@
         startCamera();
 
 
-        /*
-          Volver a mostrar controles.
-        */
-
-        showControls();
-
       }
     );
 
@@ -1831,7 +1652,29 @@
       () => {
 
 
-        const app =
+        /*
+          No permitir entrar a pantalla
+          completa desde el modo proyección.
+
+          Primero se vuelve al modo normal.
+        */
+
+        if (
+          isProjecting
+        ) {
+
+
+          disableProjectionMode();
+
+
+        }
+
+
+        /*
+          Obtener aplicación.
+        */
+
+        const appElement =
           document.getElementById(
             'app'
           );
@@ -1846,14 +1689,16 @@
         ) {
 
 
-          app
+          appElement
             .requestFullscreen()
             .catch(
               err => {
 
+
                 alert(
                   err.message
                 );
+
 
               }
             );
@@ -1871,15 +1716,9 @@
 
           document.exitFullscreen();
 
+
         }
 
-
-        /*
-          Reiniciar temporizador
-          de controles.
-        */
-
-        showControls();
 
       }
     );
@@ -1904,6 +1743,7 @@
 
 
         }
+
 
       }
     );
