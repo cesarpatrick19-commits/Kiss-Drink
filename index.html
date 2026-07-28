@@ -43,8 +43,12 @@
         Verdana,
         sans-serif;
 
-      touch-action:
-        manipulation;
+      /*
+        Permite controlar mejor
+        los gestos táctiles.
+      */
+
+      touch-action: manipulation;
 
     }
 
@@ -93,8 +97,8 @@
     /* =========================================
        MARCO DECORATIVO
        
-       El banner superior KISS CAM
-       ya está incluido en el PNG.
+       El texto KISS CAM ya está incluido
+       dentro del PNG.
     ========================================= */
 
     .frame-overlay {
@@ -136,6 +140,11 @@
 
       display: block;
 
+      /*
+        El PNG ocupa exactamente
+        toda la pantalla.
+      */
+
       object-fit: fill;
 
       pointer-events: none;
@@ -161,16 +170,6 @@
 
       pointer-events: none;
 
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: flex-end;
-
-      align-items: center;
-
-      padding: 10px;
-
       z-index: 20;
 
     }
@@ -179,11 +178,22 @@
     /* =========================================
        BANNER INFERIOR
        
-       QUEDA FIJO.
-       No desaparece automáticamente.
+       "Beso o Shot"
+       
+       Este elemento permanece fijo
+       y separado de los botones.
     ========================================= */
 
     .bottom-bar {
+
+      position: absolute;
+
+      left: 50%;
+
+      bottom: 10px;
+
+      transform:
+        translateX(-50%);
 
       pointer-events: auto;
 
@@ -193,13 +203,13 @@
 
       justify-content: center;
 
-      gap: 7px;
+      gap: 6px;
 
       background:
         rgba(0, 0, 0, 0.65);
 
       padding:
-        5px 12px;
+        5px 10px;
 
       border-radius:
         30px;
@@ -215,20 +225,24 @@
         0 4px 12px
         rgba(0, 0, 0, 0.3);
 
-      max-width:
-        calc(100vw - 20px);
+      white-space:
+        nowrap;
 
-      flex-shrink:
-        0;
+      /*
+        El banner permanece siempre visible.
+      */
+
+      opacity:
+        1;
 
       transition:
-        transform 0.35s ease;
+        opacity 0.3s ease;
 
     }
 
 
     /* =========================================
-       TEXTO BESO O SHOT
+       TEXTO DEL BANNER
     ========================================= */
 
     .footer-text {
@@ -257,9 +271,6 @@
       white-space:
         nowrap;
 
-      flex-shrink:
-        0;
-
       line-height:
         1;
 
@@ -270,7 +281,7 @@
        ICONO DE BESO
     ========================================= */
 
-    .kiss-icon {
+    .kiss {
 
       font-size:
         1rem;
@@ -281,67 +292,164 @@
       flex-shrink:
         0;
 
+      animation:
+        pulse 0.9s infinite alternate;
+
     }
 
 
     /* =========================================
-       SEPARADOR
+       ICONO DE CERVEZA
     ========================================= */
 
-    .divider {
+    .glass {
 
-      width:
-        1px;
+      font-size:
+        1rem;
 
-      height:
-        20px;
-
-      background:
-        rgba(255, 255, 255, 0.3);
+      line-height:
+        1;
 
       flex-shrink:
         0;
 
+      animation:
+        pulse 0.9s infinite alternate;
+
     }
 
 
     /* =========================================
-       CONTROLES LATERALES
+       ANIMACIÓN
+    ========================================= */
+
+    @keyframes pulse {
+
+      from {
+
+        transform:
+          scale(1);
+
+      }
+
+      to {
+
+        transform:
+          scale(1.25);
+
+      }
+
+    }
+
+
+    /* =========================================
+       GRUPO DE BOTONES
+       
+       Se ubica en el costado
+       inferior derecho.
     ========================================= */
 
     .controls {
 
-      position: fixed;
+      position: absolute;
 
-      right:
-        12px;
+      right: 10px;
 
-      bottom:
-        12px;
+      bottom: 10px;
 
-      display:
-        flex;
+      display: flex;
 
-      flex-direction:
-        column;
+      flex-direction: column;
 
-      align-items:
-        center;
+      align-items: center;
 
-      gap:
-        7px;
+      gap: 6px;
 
-      pointer-events:
-        auto;
-
-      z-index:
-        50;
+      pointer-events: auto;
 
     }
 
 
     /* =========================================
-       BOTONES
+       BOTONES SECUNDARIOS
+       
+       Cambio de cámara
+       Pantalla completa
+    ========================================= */
+
+    .secondary-controls {
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 6px;
+
+      /*
+        Visibles en modo desbloqueado.
+      */
+
+      opacity:
+        1;
+
+      transform:
+        translateY(0);
+
+      pointer-events:
+        auto;
+
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+
+    }
+
+
+    /* =========================================
+       MODO PROYECCIÓN
+       
+       Los botones secundarios desaparecen.
+    ========================================= */
+
+    .container.projecting
+    .secondary-controls {
+
+      opacity:
+        0;
+
+      transform:
+        translateY(10px);
+
+      pointer-events:
+        none;
+
+    }
+
+
+    /* =========================================
+       BOTÓN DE PROYECCIÓN
+       
+       Siempre permanece visible.
+    ========================================= */
+
+    #projection {
+
+      width:
+        34px;
+
+      height:
+        34px;
+
+      font-size:
+        0.95rem;
+
+    }
+
+
+    /* =========================================
+       BOTONES GENERALES
     ========================================= */
 
     .btn-icon {
@@ -357,10 +465,10 @@
         rgba(255, 255, 255, 0.4);
 
       width:
-        34px;
+        32px;
 
       height:
-        34px;
+        32px;
 
       border-radius:
         50%;
@@ -369,7 +477,7 @@
         pointer;
 
       font-size:
-        0.9rem;
+        0.85rem;
 
       display:
         flex;
@@ -382,7 +490,8 @@
 
       transition:
         background 0.2s,
-        transform 0.1s;
+        transform 0.1s,
+        box-shadow 0.2s;
 
       flex-shrink:
         0;
@@ -399,231 +508,56 @@
     }
 
 
+    /* =========================================
+       EFECTO AL PRESIONAR
+    ========================================= */
+
     .btn-icon:active {
 
       transform:
         scale(0.9);
 
       background:
-        rgba(255, 255, 255, 0.35);
+        rgba(255, 255, 255, 0.3);
 
     }
 
 
     /* =========================================
-       BOTÓN DE GRABACIÓN
+       BOTÓN DE PROYECCIÓN
+       
+       Color lila para diferenciarlo.
     ========================================= */
 
-    #record-btn {
+    #projection {
 
       border-color:
-        rgba(255, 255, 255, 0.5);
-
-    }
-
-
-    /* Estado grabando */
-
-    #record-btn.recording {
-
-      background:
-        rgba(220, 30, 30, 0.8);
-
-      border-color:
-        rgba(255, 255, 255, 0.9);
+        rgba(181, 126, 220, 0.7);
 
       box-shadow:
-        0 0 12px
-        rgba(255, 50, 50, 0.8);
-
-      animation:
-        recordPulse 1s infinite alternate;
-
-    }
-
-
-    @keyframes recordPulse {
-
-      from {
-
-        transform:
-          scale(1);
-
-      }
-
-      to {
-
-        transform:
-          scale(1.08);
-
-      }
+        0 0 8px
+        rgba(181, 126, 220, 0.25);
 
     }
 
 
     /* =========================================
-       BOTÓN MODO PROYECCIÓN
+       INDICADOR VISUAL:
+       MODO PROYECCIÓN ACTIVO
     ========================================= */
 
-    #projection-btn {
+    .container.projecting
+    #projection {
 
-      width:
-        32px;
-
-      height:
-        32px;
-
-      font-size:
-        0.8rem;
+      background:
+        rgba(181, 126, 220, 0.35);
 
       border-color:
+        rgba(181, 126, 220, 1);
+
+      box-shadow:
+        0 0 10px
         rgba(181, 126, 220, 0.65);
-
-    }
-
-
-    /* =========================================
-       MODO PROYECCIÓN
-       
-       Se ocultan los controles secundarios.
-    ========================================= */
-
-    .container.projection-mode
-    .secondary-controls {
-
-      display:
-        none;
-
-    }
-
-
-    /* =========================================
-       MODO PROYECCIÓN
-       
-       El banner inferior baja.
-    ========================================= */
-
-    .container.projection-mode
-    .bottom-bar {
-
-      transform:
-        translateY(0);
-
-    }
-
-
-    /* =========================================
-       BOTÓN PROYECCIÓN
-       
-       En modo proyección permanece visible.
-    ========================================= */
-
-    .container.projection-mode
-    #projection-btn {
-
-      display:
-        flex;
-
-    }
-
-
-    /* =========================================
-       INDICADOR VISUAL DE GRABACIÓN
-    ========================================= */
-
-    .recording-status {
-
-      position:
-        fixed;
-
-      top:
-        12px;
-
-      left:
-        50%;
-
-      transform:
-        translateX(-50%);
-
-      z-index:
-        60;
-
-      display:
-        none;
-
-      align-items:
-        center;
-
-      gap:
-        6px;
-
-      padding:
-        5px 10px;
-
-      border-radius:
-        20px;
-
-      background:
-        rgba(0, 0, 0, 0.6);
-
-      color:
-        white;
-
-      font-size:
-        0.7rem;
-
-      font-weight:
-        600;
-
-      pointer-events:
-        none;
-
-    }
-
-
-    .recording-status.active {
-
-      display:
-        flex;
-
-    }
-
-
-    .recording-dot {
-
-      width:
-        8px;
-
-      height:
-        8px;
-
-      background:
-        #ff3333;
-
-      border-radius:
-        50%;
-
-      animation:
-        recordDotPulse 1s infinite alternate;
-
-    }
-
-
-    @keyframes recordDotPulse {
-
-      from {
-
-        opacity:
-          0.4;
-
-      }
-
-      to {
-
-        opacity:
-          1;
-
-      }
 
     }
 
@@ -664,15 +598,10 @@
       }
 
 
-      .overlay {
-
-        padding:
-          8px 10px 10px 10px;
-
-      }
-
-
       .bottom-bar {
+
+        bottom:
+          10px;
 
         padding:
           4px 10px;
@@ -691,7 +620,7 @@
       .controls {
 
         right:
-          12px;
+          10px;
 
         bottom:
           10px;
@@ -732,7 +661,15 @@
           8px;
 
         bottom:
-          10px;
+          8px;
+
+        gap:
+          5px;
+
+      }
+
+
+      .secondary-controls {
 
         gap:
           5px;
@@ -743,10 +680,10 @@
       .btn-icon {
 
         width:
-          30px;
+          29px;
 
         height:
-          30px;
+          29px;
 
         font-size:
           0.75rem;
@@ -754,15 +691,64 @@
       }
 
 
-      #projection-btn {
+      #projection {
 
         width:
-          29px;
+          32px;
 
         height:
-          29px;
+          32px;
+
+        font-size:
+          0.85rem;
 
       }
+
+    }
+
+
+    /* =========================================
+       MODO PROYECCIÓN:
+       BANNER INFERIOR UN POCO MÁS ABAJO
+       
+       El banner ya está en posición inferior,
+       por lo que se mantiene fijo.
+    ========================================= */
+
+    .container.projecting
+    .bottom-bar {
+
+      bottom:
+        10px;
+
+    }
+
+
+    /* =========================================
+       MODO PANTALLA COMPLETA
+    ========================================= */
+
+    :fullscreen {
+
+      width:
+        100vw;
+
+      height:
+        100dvh;
+
+      background:
+        #000;
+
+    }
+
+
+    :fullscreen .container {
+
+      width:
+        100vw;
+
+      height:
+        100dvh;
 
     }
 
@@ -799,8 +785,8 @@
     <!-- =======================================
          MARCO DECORATIVO
          
-         El banner KISS CAM
-         está incluido en este PNG.
+         KISS CAM ya viene incluido
+         dentro de los archivos PNG.
     ======================================== -->
 
     <picture
@@ -808,32 +794,11 @@
     >
 
       <img
-        id="frame-image"
         src="assets/frames/marco-kisscam-horizontal.png"
         alt=""
       >
 
     </picture>
-
-
-    <!-- =======================================
-         ESTADO DE GRABACIÓN
-    ======================================== -->
-
-    <div
-      class="recording-status"
-      id="recording-status"
-    >
-
-      <span
-        class="recording-dot"
-      ></span>
-
-      <span>
-        GRABANDO
-      </span>
-
-    </div>
 
 
     <!-- =======================================
@@ -847,9 +812,12 @@
 
 
       <!-- =====================================
-           BANNER BESO O SHOT
-           
-           Este elemento queda fijo.
+           BANNER:
+
+           💋 ¡Beso o Shot! 🍻
+
+           Siempre visible.
+           Independiente de los botones.
       ====================================== -->
 
       <div
@@ -862,7 +830,7 @@
         >
 
           <span
-            class="kiss-icon"
+            class="kiss"
           >
             💋
           </span>
@@ -871,123 +839,103 @@
             ¡Beso o Shot!
           </span>
 
+          <span
+            class="glass"
+          >
+            🍻
+          </span>
+
         </div>
 
       </div>
 
-    </div>
-
-
-    <!-- =======================================
-         CONTROLES LATERALES
-    ======================================== -->
-
-    <div
-      class="controls"
-      id="controls"
-    >
-
 
       <!-- =====================================
-           CAMBIAR CÁMARA
-           
-           Control secundario.
+           CONTROLES LATERALES
+
+           Se encuentran en la esquina
+           inferior derecha.
       ====================================== -->
 
       <div
-        class="secondary-controls"
+        class="controls"
+        id="controls"
       >
+
+
+        <!-- =================================
+             BOTONES SECUNDARIOS
+
+             Solo aparecen en modo
+             desbloqueado.
+        ================================== -->
+
+        <div
+          class="secondary-controls"
+          id="secondary-controls"
+        >
+
+
+          <!-- CAMBIAR CÁMARA -->
+
+          <button
+            class="btn-icon"
+            id="switch-cam"
+            title="Cambiar Cámara"
+            aria-label="Cambiar Cámara"
+          >
+
+            🔄
+
+          </button>
+
+
+          <!-- PANTALLA COMPLETA -->
+
+          <button
+            class="btn-icon"
+            id="fullscreen"
+            title="Pantalla Completa"
+            aria-label="Pantalla Completa"
+          >
+
+            ⛶
+
+          </button>
+
+
+        </div>
+
+
+        <!-- =================================
+             BOTÓN DE PROYECCIÓN
+
+             Este botón funciona como
+             interruptor entre:
+
+             MODO DESBLOQUEADO
+             MODO PROYECCIÓN
+        ================================== -->
 
         <button
           class="btn-icon"
-          id="switch-cam"
-          title="Cambiar Cámara"
-          aria-label="Cambiar Cámara"
+          id="projection"
+          title="Activar modo proyección"
+          aria-label="Activar modo proyección"
         >
-          🔄
+
+          📽️
+
         </button>
 
-      </div>
-
-
-      <!-- =====================================
-           PANTALLA COMPLETA
-           
-           Control secundario.
-      ====================================== -->
-
-      <div
-        class="secondary-controls"
-      >
-
-        <button
-          class="btn-icon"
-          id="fullscreen"
-          title="Pantalla Completa"
-          aria-label="Pantalla Completa"
-        >
-          ⛶
-        </button>
 
       </div>
-
-
-      <!-- =====================================
-           GRABAR
-           
-           Control secundario.
-      ====================================== -->
-
-      <div
-        class="secondary-controls"
-      >
-
-        <button
-          class="btn-icon"
-          id="record-btn"
-          title="Grabar"
-          aria-label="Grabar"
-        >
-          🔴
-        </button>
-
-      </div>
-
-
-      <!-- =====================================
-           MODO PROYECCIÓN
-           
-           Este botón permanece visible
-           incluso en modo proyección.
-      ====================================== -->
-
-      <button
-        class="btn-icon"
-        id="projection-btn"
-        title="Modo Proyección"
-        aria-label="Modo Proyección"
-      >
-        📺
-      </button>
 
 
     </div>
 
 
   </div>
-
-
-  <!-- =========================================
-       CANVAS OCULTO
-       
-       Se utiliza para crear la composición
-       completa que será grabada.
-  ========================================= -->
-
-  <canvas
-    id="recording-canvas"
-    style="display:none;"
-  ></canvas>
 
 
   <!-- =========================================
@@ -1013,12 +961,6 @@
       );
 
 
-    const frameImage =
-      document.getElementById(
-        'frame-image'
-      );
-
-
     const switchBtn =
       document.getElementById(
         'switch-cam'
@@ -1031,39 +973,9 @@
       );
 
 
-    const recordBtn =
-      document.getElementById(
-        'record-btn'
-      );
-
-
     const projectionBtn =
       document.getElementById(
-        'projection-btn'
-      );
-
-
-    const bottomBar =
-      document.getElementById(
-        'bottom-bar'
-      );
-
-
-    const recordingStatus =
-      document.getElementById(
-        'recording-status'
-      );
-
-
-    const canvas =
-      document.getElementById(
-        'recording-canvas'
-      );
-
-
-    const ctx =
-      canvas.getContext(
-        '2d'
+        'projection'
       );
 
 
@@ -1084,7 +996,7 @@
 
 
     /* =========================================
-       VARIABLES DE ZOOM
+       VARIABLES DEL ZOOM
     ========================================= */
 
     let initialPinchDistance =
@@ -1112,30 +1024,10 @@
 
 
     /* =========================================
-       MODO PROYECCIÓN
+       ESTADO DEL MODO PROYECCIÓN
     ========================================= */
 
-    let projectionMode =
-      false;
-
-
-    /* =========================================
-       VARIABLES DE GRABACIÓN
-    ========================================= */
-
-    let mediaRecorder =
-      null;
-
-
-    let recordedChunks =
-      [];
-
-
-    let recordingAnimation =
-      null;
-
-
-    let isRecording =
+    let isProjecting =
       false;
 
 
@@ -1145,29 +1037,190 @@
 
     async function requestWakeLock() {
 
+
       try {
+
 
         if (
           'wakeLock' in navigator
         ) {
+
 
           wakeLock =
             await navigator.wakeLock.request(
               'screen'
             );
 
+
+          console.log(
+            'Wake Lock activado'
+          );
+
+
         }
 
+
       } catch (err) {
+
 
         console.log(
           "WakeLock:",
           err.message
         );
 
+
+      }
+
+
+    }
+
+
+    /* =========================================
+       ACTIVAR MODO PROYECCIÓN
+    ========================================= */
+
+    function enableProjectionMode() {
+
+
+      /*
+        Activar estado.
+      */
+
+      isProjecting =
+        true;
+
+
+      /*
+        Agregar clase al contenedor.
+
+        CSS se encarga de ocultar:
+
+        🔄 Cambiar cámara
+        ⛶ Pantalla completa
+      */
+
+      app.classList.add(
+        'projecting'
+      );
+
+
+      /*
+        Actualizar texto de ayuda.
+      */
+
+      projectionBtn.title =
+        "Salir del modo proyección";
+
+
+      projectionBtn.setAttribute(
+        'aria-label',
+        'Salir del modo proyección'
+      );
+
+
+      /*
+        Mantener pantalla encendida.
+      */
+
+      requestWakeLock();
+
+
+    }
+
+
+    /* =========================================
+       DESACTIVAR MODO PROYECCIÓN
+    ========================================= */
+
+    function disableProjectionMode() {
+
+
+      /*
+        Desactivar estado.
+      */
+
+      isProjecting =
+        false;
+
+
+      /*
+        Quitar clase.
+      */
+
+      app.classList.remove(
+        'projecting'
+      );
+
+
+      /*
+        Restaurar texto de ayuda.
+      */
+
+      projectionBtn.title =
+        "Activar modo proyección";
+
+
+      projectionBtn.setAttribute(
+        'aria-label',
+        'Activar modo proyección'
+      );
+
+
+    }
+
+
+    /* =========================================
+       ALTERNAR MODO PROYECCIÓN
+    ========================================= */
+
+    function toggleProjectionMode() {
+
+
+      if (
+        isProjecting
+      ) {
+
+
+        /*
+          Actualmente proyectando.
+
+          Volver al modo normal.
+        */
+
+        disableProjectionMode();
+
+
+      } else {
+
+
+        /*
+          Actualmente desbloqueado.
+
+          Activar proyección.
+        */
+
+        enableProjectionMode();
+
+
       }
 
     }
+
+
+    /* =========================================
+       BOTÓN PROYECTAR
+    ========================================= */
+
+    projectionBtn.addEventListener(
+      'click',
+      () => {
+
+
+        toggleProjectionMode();
+
+
+      }
+    );
 
 
     /* =========================================
@@ -1177,9 +1230,14 @@
     async function startCamera() {
 
 
+      /*
+        Detener stream anterior.
+      */
+
       if (
         currentStream
       ) {
+
 
         currentStream
           .getTracks()
@@ -1188,11 +1246,17 @@
               track.stop()
           );
 
+
       }
 
 
       try {
 
+
+        /*
+          Solicitar acceso
+          a la cámara.
+        */
 
         const stream =
           await navigator.mediaDevices
@@ -1225,13 +1289,25 @@
             });
 
 
+        /*
+          Guardar stream.
+        */
+
         currentStream =
           stream;
 
 
+        /*
+          Mostrar cámara.
+        */
+
         video.srcObject =
           stream;
 
+
+        /*
+          Obtener pista de video.
+        */
 
         videoTrack =
           stream
@@ -1270,6 +1346,10 @@
               minZoom;
 
 
+            /*
+              Aplicar zoom mínimo.
+            */
+
             await videoTrack
               .applyConstraints({
 
@@ -1288,18 +1368,26 @@
               .catch(
                 e => {
 
+
                   console.log(
-                    "Error aplicando zoom:",
+                    "Error aplicando zoom inicial:",
                     e
                   );
+
 
                 }
               );
 
+
           }
+
 
         }
 
+
+        /*
+          Mantener pantalla encendida.
+        */
 
         requestWakeLock();
 
@@ -1314,6 +1402,7 @@
 
 
       }
+
 
     }
 
@@ -1342,11 +1431,12 @@
         dy
       );
 
+
     }
 
 
     /* =========================================
-       INICIO PINCH ZOOM
+       INICIO DEL PINCH ZOOM
     ========================================= */
 
     window.addEventListener(
@@ -1367,12 +1457,13 @@
 
         }
 
+
       }
     );
 
 
     /* =========================================
-       MOVIMIENTO PINCH ZOOM
+       MOVIMIENTO DEL PINCH ZOOM
     ========================================= */
 
     window.addEventListener(
@@ -1408,6 +1499,10 @@
               );
 
 
+            /*
+              Sensibilidad del zoom.
+            */
+
             const diff =
 
               (
@@ -1415,6 +1510,11 @@
                 initialPinchDistance
               ) * 0.01;
 
+
+            /*
+              Limitar zoom
+              al rango soportado.
+            */
 
             const newZoom =
 
@@ -1473,9 +1573,12 @@
 
             }
 
+
           }
 
+
         }
+
 
       }
     );
@@ -1494,10 +1597,13 @@
           e.touches.length < 2
         ) {
 
+
           initialPinchDistance =
             null;
 
+
         }
+
 
       }
     );
@@ -1512,18 +1618,10 @@
       () => {
 
 
-        if (
-          isRecording
-        ) {
-
-          alert(
-            "Detén la grabación antes de cambiar de cámara."
-          );
-
-          return;
-
-        }
-
+        /*
+          Alternar entre cámara frontal
+          y cámara trasera.
+        */
 
         facingMode =
 
@@ -1534,7 +1632,12 @@
             : "user";
 
 
+        /*
+          Reiniciar cámara.
+        */
+
         startCamera();
+
 
       }
     );
@@ -1549,920 +1652,76 @@
       () => {
 
 
+        /*
+          No permitir entrar a pantalla
+          completa desde el modo proyección.
+
+          Primero se vuelve al modo normal.
+        */
+
+        if (
+          isProjecting
+        ) {
+
+
+          disableProjectionMode();
+
+
+        }
+
+
+        /*
+          Obtener aplicación.
+        */
+
+        const appElement =
+          document.getElementById(
+            'app'
+          );
+
+
+        /*
+          Entrar en pantalla completa.
+        */
+
         if (
           !document.fullscreenElement
         ) {
 
 
-          app
+          appElement
             .requestFullscreen()
             .catch(
               err => {
+
 
                 alert(
                   err.message
                 );
 
+
               }
             );
 
 
-        } else {
+        }
+
+
+        /*
+          Salir de pantalla completa.
+        */
+
+        else {
 
 
           document.exitFullscreen();
 
-        }
-
-      }
-    );
-
-
-    /* =========================================
-       CAMBIAR MODO PROYECCIÓN
-    ========================================= */
-
-    projectionBtn.addEventListener(
-      'click',
-      () => {
-
-
-        projectionMode =
-          !projectionMode;
-
-
-        if (
-          projectionMode
-        ) {
-
-
-          /*
-            Activar modo proyección.
-          */
-
-          app.classList.add(
-            'projection-mode'
-          );
-
-
-          /*
-            Cambiar título.
-          */
-
-          projectionBtn.title =
-            "Salir del Modo Proyección";
-
-
-          projectionBtn.setAttribute(
-            "aria-label",
-            "Salir del Modo Proyección"
-          );
-
-
-        } else {
-
-
-          /*
-            Volver al modo teléfono.
-          */
-
-          app.classList.remove(
-            'projection-mode'
-          );
-
-
-          projectionBtn.title =
-            "Modo Proyección";
-
-
-          projectionBtn.setAttribute(
-            "aria-label",
-            "Modo Proyección"
-          );
 
         }
 
-      }
-    );
-
-
-    /* =========================================
-       OBTENER RESOLUCIÓN DE GRABACIÓN
-    ========================================= */
-
-    function getRecordingSize() {
-
-
-      const width =
-        window.innerWidth;
-
-
-      const height =
-        window.innerHeight;
-
-
-      const isPortrait =
-        height > width;
-
-
-      /*
-        Mantener relación 9:16
-        o 16:9.
-
-        Máximo 1080p.
-      */
-
-      if (
-        isPortrait
-      ) {
-
-        return {
-
-          width:
-            1080,
-
-          height:
-            1920
-
-        };
-
-      }
-
-
-      return {
-
-        width:
-          1920,
-
-        height:
-          1080
-
-      };
-
-    }
-
-
-    /* =========================================
-       CONFIGURAR CANVAS DE GRABACIÓN
-    ========================================= */
-
-    function setupRecordingCanvas() {
-
-
-      const size =
-        getRecordingSize();
-
-
-      canvas.width =
-        size.width;
-
-
-      canvas.height =
-        size.height;
-
-    }
-
-
-    /* =========================================
-       DIBUJAR VIDEO EN CANVAS
-    ========================================= */
-
-    function drawVideoCover() {
-
-
-      const canvasWidth =
-        canvas.width;
-
-
-      const canvasHeight =
-        canvas.height;
-
-
-      const videoWidth =
-        video.videoWidth;
-
-
-      const videoHeight =
-        video.videoHeight;
-
-
-      if (
-        !videoWidth ||
-        !videoHeight
-      ) {
-
-        return;
-
-      }
-
-
-      /*
-        Calcular object-fit: cover.
-      */
-
-      const scale =
-        Math.max(
-
-          canvasWidth /
-          videoWidth,
-
-          canvasHeight /
-          videoHeight
-
-        );
-
-
-      const drawWidth =
-        videoWidth *
-        scale;
-
-
-      const drawHeight =
-        videoHeight *
-        scale;
-
-
-      const offsetX =
-
-        (
-          canvasWidth -
-          drawWidth
-        ) / 2;
-
-
-      const offsetY =
-
-        (
-          canvasHeight -
-          drawHeight
-        ) / 2;
-
-
-      ctx.drawImage(
-
-        video,
-
-        offsetX,
-
-        offsetY,
-
-        drawWidth,
-
-        drawHeight
-
-      );
-
-    }
-
-
-    /* =========================================
-       DIBUJAR MARCO
-    ========================================= */
-
-    function drawFrame() {
-
-
-      if (
-        !frameImage.complete
-      ) {
-
-        return;
-
-      }
-
-
-      ctx.drawImage(
-
-        frameImage,
-
-        0,
-
-        0,
-
-        canvas.width,
-
-        canvas.height
-
-      );
-
-    }
-
-
-    /* =========================================
-       DIBUJAR BANNER BESO O SHOT
-       
-       Se reproduce visualmente en el video.
-    ========================================= */
-
-    function drawBottomBanner() {
-
-
-      const scale =
-        canvas.width /
-        window.innerWidth;
-
-
-      const barWidth =
-        bottomBar.offsetWidth *
-        scale;
-
-
-      const barHeight =
-        bottomBar.offsetHeight *
-        scale;
-
-
-      /*
-        Posición horizontal.
-      */
-
-      const x =
-
-        (
-          canvas.width -
-          barWidth
-        ) / 2;
-
-
-      /*
-        Posición vertical.
-        
-        Se coloca abajo,
-        respetando la posición
-        de la interfaz.
-      */
-
-      const y =
-
-        canvas.height -
-        (
-          10 *
-          scale
-        ) -
-        barHeight;
-
-
-      /*
-        Fondo de la barra.
-      */
-
-      ctx.save();
-
-
-      ctx.fillStyle =
-        "rgba(0,0,0,0.65)";
-
-
-      ctx.beginPath();
-
-
-      const radius =
-        barHeight / 2;
-
-
-      ctx.roundRect(
-
-        x,
-
-        y,
-
-        barWidth,
-
-        barHeight,
-
-        radius
-
-      );
-
-
-      ctx.fill();
-
-
-      /*
-        Texto.
-      */
-
-      ctx.fillStyle =
-        "#ffffff";
-
-
-      ctx.font =
-
-        `600 ${14 * scale}px Segoe UI, sans-serif`;
-
-
-      ctx.textAlign =
-        "center";
-
-
-      ctx.textBaseline =
-        "middle";
-
-
-      ctx.fillText(
-
-        "💋  ¡Beso o Shot!",
-
-        canvas.width / 2,
-
-        y +
-        barHeight / 2
-
-      );
-
-
-      ctx.restore();
-
-    }
-
-
-    /* =========================================
-       CICLO DE DIBUJO
-    ========================================= */
-
-    function drawRecordingFrame() {
-
-
-      if (
-        !isRecording
-      ) {
-
-        return;
-
-      }
-
-
-      /*
-        Limpiar canvas.
-      */
-
-      ctx.clearRect(
-
-        0,
-
-        0,
-
-        canvas.width,
-
-        canvas.height
-
-      );
-
-
-      /*
-        Dibujar cámara.
-      */
-
-      drawVideoCover();
-
-
-      /*
-        Dibujar marco PNG.
-      */
-
-      drawFrame();
-
-
-      /*
-        Dibujar banner.
-      */
-
-      drawBottomBanner();
-
-
-      /*
-        Continuar animación.
-      */
-
-      recordingAnimation =
-        requestAnimationFrame(
-          drawRecordingFrame
-        );
-
-    }
-
-
-    /* =========================================
-       INICIAR GRABACIÓN
-    ========================================= */
-
-    async function startRecording() {
-
-
-      if (
-        isRecording
-      ) {
-
-        return;
-
-      }
-
-
-      /*
-        Verificar compatibilidad.
-      */
-
-      if (
-        !window.MediaRecorder
-      ) {
-
-        alert(
-          "Este navegador no permite grabar video."
-        );
-
-        return;
-
-      }
-
-
-      /*
-        Configurar canvas.
-      */
-
-      setupRecordingCanvas();
-
-
-      /*
-        Obtener stream del canvas.
-      */
-
-      const canvasStream =
-        canvas.captureStream(
-          30
-        );
-
-
-      /*
-        Intentar usar WebM
-        con VP9.
-      */
-
-      let mimeType =
-        "video/webm;codecs=vp9";
-
-
-      /*
-        Algunos navegadores
-        no soportan VP9.
-      */
-
-      if (
-        !MediaRecorder.isTypeSupported(
-          mimeType
-        )
-      ) {
-
-        mimeType =
-          "video/webm;codecs=vp8";
-
-      }
-
-
-      /*
-        Último fallback.
-      */
-
-      if (
-        !MediaRecorder.isTypeSupported(
-          mimeType
-        )
-      ) {
-
-        mimeType =
-          "video/webm";
-
-      }
-
-
-      try {
-
-
-        mediaRecorder =
-          new MediaRecorder(
-
-            canvasStream,
-
-            {
-
-              mimeType:
-                mimeType,
-
-              videoBitsPerSecond:
-                8000000
-
-            }
-
-          );
-
-
-      } catch (err) {
-
-
-        alert(
-          "No se pudo iniciar la grabación: "
-          + err.message
-        );
-
-
-        return;
-
-      }
-
-
-      recordedChunks =
-        [];
-
-
-      mediaRecorder.ondataavailable =
-        (event) => {
-
-
-          if (
-            event.data &&
-            event.data.size > 0
-          ) {
-
-            recordedChunks.push(
-              event.data
-            );
-
-          }
-
-        };
-
-
-      mediaRecorder.onstop =
-        saveRecording;
-
-
-      /*
-        Estado grabando.
-      */
-
-      isRecording =
-        true;
-
-
-      recordBtn.classList.add(
-        "recording"
-      );
-
-
-      recordBtn.textContent =
-        "⏹️";
-
-
-      recordBtn.title =
-        "Detener grabación";
-
-
-      recordBtn.setAttribute(
-        "aria-label",
-        "Detener grabación"
-      );
-
-
-      recordingStatus.classList.add(
-        "active"
-      );
-
-
-      /*
-        Iniciar dibujo.
-      */
-
-      drawRecordingFrame();
-
-
-      /*
-        Iniciar grabación.
-      */
-
-      mediaRecorder.start();
-
-    }
-
-
-    /* =========================================
-       DETENER GRABACIÓN
-    ========================================= */
-
-    function stopRecording() {
-
-
-      if (
-        !isRecording ||
-        !mediaRecorder
-      ) {
-
-        return;
-
-      }
-
-
-      isRecording =
-        false;
-
-
-      /*
-        Detener animación.
-      */
-
-      cancelAnimationFrame(
-        recordingAnimation
-      );
-
-
-      /*
-        Detener MediaRecorder.
-      */
-
-      if (
-        mediaRecorder.state !==
-        "inactive"
-      ) {
-
-        mediaRecorder.stop();
-
-      }
-
-
-      /*
-        Restaurar botón.
-      */
-
-      recordBtn.classList.remove(
-        "recording"
-      );
-
-
-      recordBtn.textContent =
-        "🔴";
-
-
-      recordBtn.title =
-        "Grabar";
-
-
-      recordBtn.setAttribute(
-        "aria-label",
-        "Grabar"
-      );
-
-
-      recordingStatus.classList.remove(
-        "active"
-      );
-
-    }
-
-
-    /* =========================================
-       BOTÓN GRABAR
-    ========================================= */
-
-    recordBtn.addEventListener(
-      'click',
-      () => {
-
-
-        if (
-          isRecording
-        ) {
-
-          stopRecording();
-
-        } else {
-
-          startRecording();
-
-        }
 
       }
     );
-
-
-    /* =========================================
-       GUARDAR GRABACIÓN
-    ========================================= */
-
-    function saveRecording() {
-
-
-      if (
-        recordedChunks.length === 0
-      ) {
-
-        return;
-
-      }
-
-
-      const blob =
-        new Blob(
-
-          recordedChunks,
-
-          {
-
-            type:
-              "video/webm"
-
-          }
-
-        );
-
-
-      const url =
-        URL.createObjectURL(
-          blob
-        );
-
-
-      const link =
-        document.createElement(
-          "a"
-        );
-
-
-      link.href =
-        url;
-
-
-      /*
-        Crear nombre
-        con fecha y hora.
-      */
-
-      const now =
-        new Date();
-
-
-      const timestamp =
-
-        now.getFullYear()
-        + "-"
-        + String(
-            now.getMonth() + 1
-          ).padStart(2, "0")
-        + "-"
-        + String(
-            now.getDate()
-          ).padStart(2, "0")
-        + "_"
-        + String(
-            now.getHours()
-          ).padStart(2, "0")
-        + "-"
-        + String(
-            now.getMinutes()
-          ).padStart(2, "0")
-        + "-"
-        + String(
-            now.getSeconds()
-          ).padStart(2, "0");
-
-
-      link.download =
-
-        "KissCam_"
-        + timestamp
-        + ".webm";
-
-
-      document.body.appendChild(
-        link
-      );
-
-
-      link.click();
-
-
-      document.body.removeChild(
-        link
-      );
-
-
-      /*
-        Liberar memoria.
-      */
-
-      setTimeout(
-        () => {
-
-          URL.revokeObjectURL(
-            url
-          );
-
-        },
-        1000
-      );
-
-
-      recordedChunks =
-        [];
-
-    }
 
 
     /* =========================================
@@ -2484,6 +1743,7 @@
 
 
         }
+
 
       }
     );
